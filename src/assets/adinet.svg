@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="500" height="500" viewBox="0 0 500 500" xml:space="preserve">
+<desc>Created with Fabric.js 3.6.3</desc>
+<defs>
+</defs>
+<g transform="matrix(0.1727206922268923 0.026373675678447218 -0.02637367567844722 0.17272069222689232 144.77359128545208 250.77359187084016)"  >
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: rgb(25,52,65); fill-rule: nonzero; opacity: 0.3;"  transform=" translate(-347.214464, -408.15557)" d="m 239.32338 158.15557 c -78.60067 0 -142.108912 63.50635 -142.108912 142.10701 l 0 215.78407 c 0 78.60067 63.508242 142.10892 142.108912 142.10892 l 215.78217 0 c 78.60067 0 142.10891 -63.50825 142.10891 -142.10892 l 0 -215.78407 c 0 -78.60066 -63.50824 -142.10701 -142.10891 -142.10701 l -215.78217 0 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(0.15964033602597255 -3.91e-17 3.91e-17 0.15964033602597255 144.77359128545214 250.77359187084022)"  >
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: rgb(25,52,65); fill-rule: nonzero; opacity: 1;"  transform=" translate(-347.214464, -408.15557)" d="m 239.32338 158.15557 c -78.60067 0 -142.108912 63.50635 -142.108912 142.10701 l 0 215.78407 c 0 78.60067 63.508242 142.10892 142.108912 142.10892 l 215.78217 0 c 78.60067 0 142.10891 -63.50825 142.10891 -142.10892 l 0 -215.78407 c 0 -78.60066 -63.50824 -142.10701 -142.10891 -142.10701 l -215.78217 0 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(0.14680792627466696 0 0 0.14680792627466696 144.77359128545208 250.7735918708404)"  >
+<g style=""   >
+		<g transform="matrix(1 0 0 1 -48.163845802471855 -2.448150755351861)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(28,154,234); fill-rule: nonzero; opacity: 0.83;"  transform=" translate(-89.68615419752814, -166.40184924464813)" d="M 0 81.9 v 169 c 0 12.1 12.8 19.7 23.5 14.2 l 147.3 -77.6 c 11 -5.8 11.5 -21.3 1 -27.8 L 24.5 68.3 C 13.7 61.7 0 69.4 0 81.9 z" stroke-linecap="round" />
+</g>
+		<g transform="matrix(1 0 0 1 38.44936919195126 57.31793920344839)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(28,154,234); fill-rule: nonzero; opacity: 0.83;"  transform=" translate(-176.29936919195126, -226.16793920344838)" d="M 75.9 131.6 v 189.2 c 0 13.5 14.3 22.1 26.3 15.9 l 164.9 -86.9 c 12.3 -6.5 12.9 -23.8 1.1 -31.1 L 103.3 116.3 C 91.3 108.9 75.9 117.5 75.9 131.6 z" stroke-linecap="round" />
+</g>
+		<g transform="matrix(1 0 0 1 38.44936919195126 -56.26123154371126)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(32,178,255); fill-rule: nonzero; opacity: 0.83;"  transform=" translate(-176.29936919195126, -112.58876845628873)" d="M 75.9 18 v 189.2 c 0 13.5 14.3 22.1 26.3 15.9 l 164.9 -86.9 c 12.3 -6.5 12.9 -23.8 1.1 -31.1 L 103.3 2.8 C 91.3 -4.7 75.9 3.9 75.9 18 z" stroke-linecap="round" />
+</g>
+</g>
+</g>
+<g transform="matrix(1 0 0 1 323.3424507330669 252.97859187084015)" style=""  ><path fill="#193441" opacity="1" d="M-112.36 17.91L-118.85 17.91L-105.90-20.61L-97.47-20.61L-84.47 17.91L-91.21 17.91L-94.16 9.03L-109.44 9.03L-112.36 17.91ZM-101.81-14.13L-107.57 3.21L-96.11 3.21L-101.81-14.13Z"/><path fill="#193441" opacity="1" d="M-49.99-1.35L-49.99-1.35Q-49.99 4.32-51.16 8.05Q-52.33 11.78-54.65 13.97Q-56.97 16.15-60.40 17.03Q-63.82 17.91-68.33 17.91L-68.33 17.91L-79.10 17.91L-79.10-20.61L-68.44-20.61Q-63.82-20.61-60.36-19.64Q-56.89-18.67-54.58-16.41Q-52.27-14.16-51.13-10.47Q-49.99-6.78-49.99-1.35ZM-56.78-1.41L-56.78-1.41Q-56.78-5.31-57.39-7.87Q-58.00-10.43-59.42-11.94Q-60.84-13.46-63.18-14.07Q-65.52-14.69-68.97-14.69L-68.97-14.69L-72.62-14.69L-72.62 11.98L-68.97 11.98Q-65.46 11.98-63.13 11.32Q-60.79 10.67-59.37 9.12Q-57.95 7.58-57.36 5.01Q-56.78 2.43-56.78-1.41Z"/><path fill="#193441" opacity="1" d="M-27.11 12.67L-27.11 17.91L-44.28 17.91L-44.28 12.67L-38.97 12.67L-38.97-15.38L-44.28-15.38L-44.28-20.61L-27.11-20.61L-27.11-15.38L-32.48-15.38L-32.48 12.67L-27.11 12.67Z"/><path fill="#193441" opacity="1" d="M10.05 17.91L2.34 17.91L-13.33-12.35L-13.33 17.91L-19.65 17.91L-19.65-20.61L-10.83-20.61L3.73 7.52L3.73-20.61L10.05-20.61L10.05 17.91Z"/><path fill="#193441" opacity="1" d="M43.56 17.91L19.29 17.91L19.29-20.61L43.56-20.61L43.56-14.82L25.77-14.82L25.77-5.06L40.89-5.06L40.89 0.76L25.77 0.76L25.77 11.98L43.56 11.98L43.56 17.91Z"/><path fill="#193441" opacity="1" d="M78.85-14.69L66.55-14.69L66.55 17.91L60.03 17.91L60.03-14.69L47.73-14.69L47.73-20.61L78.85-20.61L78.85-14.69Z"/></g></svg>
