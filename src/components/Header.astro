@@ -15,7 +15,7 @@ const { lang, t, src, alt } = Astro.props;
       x-data="{ isOpen: false }"
       class="w-full flex items-center justify-between"
     >
-      <Logo src={src} alt={alt} />
+      <Logo lang={lang} src={src} alt={alt} />
 
       <button
         @click="isOpen = !isOpen"

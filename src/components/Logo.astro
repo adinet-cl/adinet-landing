@@ -1,9 +1,10 @@
 ---
-const { src, alt } = Astro.props;
+const { lang, src, alt } = Astro.props;
 ---
 
 <a
-  href="/"
+  href={`/${lang}`}
+  rel="noopener noreferrer"
   class="flex items-center gap-2 text-black dark:text-white text-2xl font-bold tracking-tight hover:opacity-90 transition"
 >
   <img src={src} alt={alt} class="h-8 w-auto" />
