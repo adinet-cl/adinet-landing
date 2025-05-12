@@ -1,0 +1,82 @@
+---
+import { Icon } from "astro-icon/components";
+const { t } = Astro.props;
+---
+
+<footer
+  class="bg-white dark:bg-[#0F1117] text-gray-700 dark:text-[#B0D3D9] py-16 px-6"
+>
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+    <div class="md:col-span-1">
+      <h3 class="text-xl font-bold text-black dark:text-white mb-4">Adinet</h3>
+      <div class="flex space-x-4 text-lg text-[#59B0C8]">
+        <a
+          href="https://github.com/adinet-cl"
+          target="_blank"
+          aria-label="GitHub"
+        >
+          <Icon name="github" class="w-8 h-8" />
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-semibold text-black dark:text-white mb-4">Product</h4>
+      <ul class="space-y-2 text-sm">
+        {
+          t.sections.product.map((label: any) => (
+            <li>
+              <a href="#projects" class="hover:underline">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-black dark:text-white mb-4">Resources</h4>
+      <ul class="space-y-2 text-sm">
+        {
+          t.sections.resources.map((label: any) => (
+            <li>
+              <a href="#" class="hover:underline">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-black dark:text-white mb-4">Developers</h4>
+      <ul class="space-y-2 text-sm">
+        {
+          t.sections.developers.map((label: any) => (
+            <li>
+              <a href="#" class="hover:underline">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-black dark:text-white mb-4">Company</h4>
+      <ul class="space-y-2 text-sm">
+        {
+          t.sections.company.map((label: any) => (
+            <li>
+              <a href="#" class="hover:underline">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="text-center text-xs mt-12 text-gray-500 dark:text-gray-400">
+    {t.copyright}
+  </div>
+</footer>

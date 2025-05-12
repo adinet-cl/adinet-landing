@@ -1,0 +1,24 @@
+---
+import { getTranslations } from "../../libs/getTranslatios";
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import Projects from "../../components/Projects.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en-us" } },
+    { params: { lang: "es-mx" } },
+    { params: { lang: "es-es" } },
+  ];
+}
+
+export const defaultRedirect = "/en-us";
+
+const lang = Astro.params.lang;
+const t = getTranslations(lang);
+---
+
+<Layout lang={lang} t={t}>
+  <Hero lang={lang} t={t.pages.home.hero} />
+  <Projects t={t.pages.home.projects} />
+</Layout>

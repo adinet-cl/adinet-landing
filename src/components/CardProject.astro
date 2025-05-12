@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { title, description, features, icon } = Astro.props;
+---
+
+<div
+  class="bg-white dark:bg-[#111317] border border-gray-200 dark:border-[#1a1d23] rounded-xl p-6 hover:shadow-lg transition"
+>
+  <div class="flex items-center gap-3 mb-2">
+    <div
+      class="w-8 h-8 rounded-md bg-gray-100 dark:bg-[#1a1d23] flex items-center justify-center text-lg"
+    >
+      <Icon name={icon} class="w-5 h-5" />
+    </div>
+    <h3 class="text-xl font-semibold">{title}</h3>
+  </div>
+  <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+    {description}
+  </p>
+  <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+    {
+      features.map((feature: string) => (
+        <li class="flex items-center gap-2">
+          <Icon name="check" class="w-5 h-5 text-[#59B0C8]" />
+          <span>{feature}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

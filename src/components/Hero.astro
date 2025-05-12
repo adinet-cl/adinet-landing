@@ -1,0 +1,32 @@
+---
+const { lang, t } = Astro.props;
+---
+
+<section
+  class="bg-white dark:bg-[#0F1117] text-[#1a1a1a] dark:text-white pt-32 pb-20 px-6 transition-colors"
+>
+  <div class="max-w-5xl mx-auto text-center">
+    <h1 class="text-5xl sm:text-6xl font-bold leading-tight mb-6">
+      {t.title}
+      <br />
+      <span class="text-[#59B0C8]">{t.highlight}</span>
+    </h1>
+    <p class="text-lg text-gray-600 dark:text-[#B0D3D9] mb-8">
+      {t.description}
+    </p>
+    <div class="flex justify-center gap-4 flex-wrap">
+      <a
+        href="#projects"
+        class="bg-[#59B0C8] text-black px-6 py-3 font-semibold rounded-md hover:bg-secondary transition"
+      >
+        {t.ctaPrimary}
+      </a>
+      <a
+        href={`/${lang}/docs/overview`}
+        class="border border-primary text-primary px-6 py-3 font-semibold rounded-md hover:bg-gray-100 dark:hover:bg-[#1B2A30] transition"
+      >
+        {t.ctaSecondary}
+      </a>
+    </div>
+  </div>
+</section>

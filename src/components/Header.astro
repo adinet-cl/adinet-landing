@@ -1,0 +1,58 @@
+---
+import Logo from "./Logo.astro";
+import Nav from "./Nav.astro";
+import Location from "./LocateOption.astro";
+import SwitchTheme from "./SwitchTheme.astro";
+
+const { lang, t, src, alt } = Astro.props;
+---
+
+<header
+  class="fixed top-0 inset-x-0 z-50 bg-white/70 dark:bg-[#0F1117]/70 border-b border-gray-200 dark:border-[#1C1F26] backdrop-blur-md transition-colors"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div
+      x-data="{ isOpen: false }"
+      class="w-full flex items-center justify-between"
+    >
+      <Logo src={src} alt={alt} />
+
+      <button
+        @click="isOpen = !isOpen"
+        class="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
+        aria-label="Toggle menu"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            x-show="!isOpen"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+          <path
+            x-show="isOpen"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <div
+        class="hidden sm:flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 ml-auto"
+        :class="{ 'block w-full mt-4': isOpen }"
+      >
+        <Nav lang={lang} t={t} />
+        <div class="flex items-center gap-4">
+          <Location currentLang={lang} />
+          <SwitchTheme />
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

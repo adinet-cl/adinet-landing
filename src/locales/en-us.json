@@ -1,0 +1,121 @@
+{
+  "lang": "en-us",
+  "pageTitle": "Adinet | Self-hosted developer ecosystem for modern apps",
+  "header": {
+    "nav": [
+      {
+        "key": "product",
+        "label": "Product",
+        "type": "dropdown",
+        "items": [
+          {
+            "key": "indigodb",
+            "title": "IndigoDB",
+            "description": "Realtime ORM for Node.js powered by PostgreSQL and MongoDB.",
+            "icon": "database"
+          },
+          {
+            "key": "autorix",
+            "title": "Autorix",
+            "description": "Policy-based access control system inspired by AWS IAM.",
+            "icon": "shield-check"
+          },
+          {
+            "key": "saasCore",
+            "title": "SaaS Core",
+            "description": "Multi-tenant base platform with IAM, subscriptions and plugins.",
+            "icon": "building"
+          },
+          {
+            "key": "toolkit",
+            "title": "Open Source Toolkit",
+            "description": "Developer tools and libraries built for performance and control.",
+            "icon": "tool"
+          }
+        ]
+      },
+      {
+        "key": "docs",
+        "label": "Docs",
+        "type": "link"
+      },
+      {
+        "key": "blog",
+        "label": "Blog",
+        "type": "link"
+      },
+      {
+        "key": "about",
+        "label": "About",
+        "type": "link"
+      },
+      {
+        "key": "contact",
+        "label": "Contact",
+        "type": "link"
+      }
+    ]
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "title": "Build your vision with",
+        "highlight": "self-hosted developer tools",
+        "description": "Adinet is an all-in-one ecosystem for authentication, real-time data, permissions and more — built to scale, owned by you.",
+        "ctaPrimary": "Explore our products",
+        "ctaSecondary": "View documentation"
+      },
+      "projects": {
+        "sectionTitle": "Our Technologies",
+        "cards": [
+          {
+            "key": "indigodb",
+            "title": "IndigoDB",
+            "description": "Realtime ORM for Node.js. Powered by PostgreSQL triggers and MongoDB change streams.",
+            "features": [
+              "Realtime DB Sync",
+              "PostgreSQL & MongoDB",
+              "Prisma-like experience"
+            ],
+            "icon": "database"
+          },
+          {
+            "key": "autorix",
+            "title": "Autorix",
+            "description": "Permission system inspired by AWS IAM. Supports RBAC, ABAC and dynamic policies.",
+            "features": [
+              "RBAC & ABAC",
+              "Policy conditions",
+              "NestJS & Express compatible"
+            ],
+            "icon": "shield-check"
+          },
+          {
+            "key": "saasCore",
+            "title": "SaaS Core",
+            "description": "Multi-tenant IAM, subscriptions and base services for scalable SaaS platforms.",
+            "features": [
+              "Multi-tenant ready",
+              "IAM module with roles",
+              "Subscription logic built-in"
+            ],
+            "icon": "building"
+          }
+        ]
+      }
+    },
+    "docs": {},
+    "blog": {},
+    "contact": {},
+    "about": {}
+  },
+  "footer": {
+    "sections": {
+      "product": ["IndigoDB", "Autorix", "SaaS Core"],
+      "resources": ["Docs", "Blog", "Status"],
+      "developers": ["Open Source", "Community", "Contributing"],
+      "company": ["About", "Careers", "Contact"]
+    },
+    "copyright": "© 2025 Adinet. All rights reserved."
+  }
+}

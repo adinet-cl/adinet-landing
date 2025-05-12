@@ -1,0 +1,52 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { currentLang } = Astro.props;
+
+const languages = [
+  { code: "en-us", label: "English (US)" },
+  { code: "es-mx", label: "Español (MX)" },
+  { code: "es-es", label: "Español (ES)" },
+];
+---
+
+<div
+  class="flex items-center gap-2 bg-white dark:bg-[#1c1f26] px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700"
+>
+  <span
+    class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+  >
+    <Icon name="world" class="w-5 h-5" />
+  </span>
+  <div class="relative">
+    <select
+      id="language-select"
+      class="appearance-none bg-transparent text-black dark:text-white focus:outline-none text-sm pr-6"
+    >
+      {
+        languages.map((lang) => (
+          <option value={lang.code} selected={lang.code === currentLang}>
+            {lang.label}
+          </option>
+        ))
+      }
+    </select>
+    <span
+      class="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"
+    >
+      ▼
+    </span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const select = document.getElementById("language-select");
+    if (select) {
+      select.addEventListener("change", (e: any) => {
+        const lang = e.target.value;
+        window.location.href = `/${lang}`;
+      });
+    }
+  });
+</script>

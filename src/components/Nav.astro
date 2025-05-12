@@ -1,0 +1,24 @@
+---
+import DropdownMenu from "./DropdownMenu.astro";
+
+const { lang, t } = Astro.props;
+---
+
+<nav
+  class="flex gap-6 items-center text-sm text-gray-800 dark:text-[#B0D3D9] transition-colors"
+>
+  {
+    t.nav.map((item: any) =>
+      item.type === "dropdown" ? (
+        <DropdownMenu label={item.label} items={item.items} lang={lang} />
+      ) : (
+        <a
+          href={`/${lang}/${item.key}`}
+          class="hover:text-black dark:hover:text-white"
+        >
+          {item.label}
+        </a>
+      )
+    )
+  }
+</nav>

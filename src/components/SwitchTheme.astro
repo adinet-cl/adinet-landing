@@ -1,0 +1,89 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div
+  class="flex items-center gap-2 bg-white dark:bg-[#1c1f26] px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700"
+>
+  <button
+    id="mode-system"
+    class="w-8 h-8 flex items-center justify-center rounded-full text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+    aria-label="System theme"
+  >
+    <Icon name="system" class="w-5 h-5" />
+  </button>
+  <button
+    id="mode-light"
+    class="w-8 h-8 flex items-center justify-center rounded-full text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+    aria-label="Light theme"
+  >
+    <Icon name="sun" class="w-5 h-5" />
+  </button>
+  <button
+    id="mode-dark"
+    class="w-8 h-8 flex items-center justify-center rounded-full text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+    aria-label="Dark theme"
+  >
+    <Icon name="moon" class="w-5 h-5" />
+  </button>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons: any = {
+      system: document.getElementById("mode-system"),
+      light: document.getElementById("mode-light"),
+      dark: document.getElementById("mode-dark"),
+    };
+
+    const setTheme = (mode: any) => {
+      if (mode === "light") {
+        document.documentElement.classList.remove("dark");
+      } else if (mode === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        localStorage.removeItem("theme");
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+      localStorage.setItem("theme", mode);
+      updateActive(mode);
+    };
+
+    const updateActive = (mode: any) => {
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (key === mode) {
+          (btn as HTMLElement).classList.add(
+            "ring-2",
+            "ring-inset",
+            "ring-gray-300",
+            "dark:ring-gray-500",
+            "bg-gray-200",
+            "dark:bg-gray-700"
+          );
+        } else {
+          (btn as HTMLElement).classList.remove(
+            "ring-2",
+            "ring-inset",
+            "ring-gray-300",
+            "dark:ring-gray-500",
+            "bg-gray-200",
+            "dark:bg-gray-700"
+          );
+        }
+      });
+    };
+
+    let stored = localStorage.getItem("theme");
+    if (!stored) {
+      stored = "system";
+    }
+    setTheme(stored);
+
+    buttons.system.addEventListener("click", () => setTheme("system"));
+    buttons.light.addEventListener("click", () => setTheme("light"));
+    buttons.dark.addEventListener("click", () => setTheme("dark"));
+  });
+</script>
