@@ -4,35 +4,106 @@ import { Icon } from "astro-icon/components";
 const { label, items, lang } = Astro.props;
 ---
 
-<div class="relative group">
-  <button class="hover:text-black dark:hover:text-white transition font-medium">
+<div class="relative" data-dropdown>
+  <button
+    type="button"
+    class="hover:text-black dark:hover:text-white transition font-medium"
+    aria-expanded="false"
+    aria-haspopup="true"
+    data-dropdown-trigger
+  >
     {label}
   </button>
   <div
-    class="absolute hidden group-hover:flex flex-col
+    data-dropdown-menu
+    class="absolute hidden flex-col
               bg-gray-100 dark:bg-[#1C1F26]
               border border-gray-300 dark:border-[#2a2f3a]
               rounded-md p-4 mt-2 w-72 z-50 shadow-lg transition-colors"
   >
     {
-      items.map((item: any) => (
-        <a
-          href={`/${lang}/${item.key}`}
-          class="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2A313D] transition"
-        >
-          <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-[#2A313D] text-black dark:text-white rounded-md">
-            <Icon name={item.icon || "app"} class="w-5 h-5" />
-          </div>
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm text-gray-900 dark:text-white">
-              {item.title}
-            </span>
-            <span class="text-xs text-gray-600 dark:text-gray-400">
-              {item.description}
-            </span>
-          </div>
-        </a>
-      ))
+      items.map((item: any) => {
+        const content = (
+          <>
+            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-[#2A313D] text-black dark:text-white rounded-md">
+              <Icon name={item.icon || "app"} class="w-5 h-5" />
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-sm text-gray-900 dark:text-white">
+                {item.title}
+              </span>
+              <span class="text-xs text-gray-600 dark:text-gray-400">
+                {item.description}
+              </span>
+            </div>
+          </>
+        );
+
+        if (item.href) {
+          return (
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2A313D] transition"
+            >
+              {content}
+            </a>
+          );
+        }
+
+        if (item.comingSoon) {
+          return (
+            <div
+              class="flex items-start gap-4 p-3 rounded-lg opacity-60 cursor-default"
+              aria-disabled="true"
+            >
+              {content}
+            </div>
+          );
+        }
+
+        return (
+          <a
+            href={`/${lang}/${item.key}`}
+            class="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2A313D] transition"
+          >
+            {content}
+          </a>
+        );
+      })
     }
   </div>
 </div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-dropdown]").forEach((root) => {
+    const trigger = root.querySelector<HTMLButtonElement>("[data-dropdown-trigger]");
+    const menu = root.querySelector<HTMLElement>("[data-dropdown-menu]");
+    if (!trigger || !menu) return;
+
+    const setOpen = (open: boolean) => {
+      trigger.setAttribute("aria-expanded", String(open));
+      menu.classList.toggle("hidden", !open);
+      menu.classList.toggle("flex", open);
+    };
+
+    trigger.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setOpen(trigger.getAttribute("aria-expanded") !== "true");
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    });
+  });
+</script>
