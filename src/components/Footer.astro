@@ -1,12 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
-const { t } = Astro.props;
+
+const { lang, t, comingSoon } = Astro.props;
 ---
 
 <footer
   class="bg-white dark:bg-[#0F1117] text-gray-700 dark:text-[#B0D3D9] py-16 px-6"
 >
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
     <div>
       <h3 class="text-xl font-bold text-black dark:text-white mb-4">Adinet</h3>
       <div class="flex space-x-4 text-lg text-[#59B0C8]">
@@ -21,7 +22,9 @@ const { t } = Astro.props;
       </div>
     </div>
     <div>
-      <h4 class="font-semibold text-black dark:text-white mb-4">Product</h4>
+      <h4 class="font-semibold text-black dark:text-white mb-4">
+        {t.headings.product}
+      </h4>
       <ul class="space-y-2 text-sm">
         {
           t.sections.product.map((item: any) => (
@@ -36,8 +39,24 @@ const { t } = Astro.props;
                   {item.label}
                 </a>
               ) : (
-                <span class="opacity-60">{item.label}</span>
+                <span class="opacity-60">{item.label} — {comingSoon}</span>
               )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-black dark:text-white mb-4">
+        {t.headings.company}
+      </h4>
+      <ul class="space-y-2 text-sm">
+        {
+          t.sections.company.map((item: any) => (
+            <li>
+              <a href={`/${lang}/${item.key}`} class="hover:underline">
+                {item.label}
+              </a>
             </li>
           ))
         }

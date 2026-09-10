@@ -1,6 +1,7 @@
 {
   "lang": "es-mx",
   "pageTitle": "Adinet | Ecosistema autogestionado para desarrolladores modernos",
+  "comingSoon": "Próximamente",
   "header": {
     "nav": [
       {
@@ -37,6 +38,10 @@
             "comingSoon": true
           }
         ]
+      },
+      {
+        "key": "about",
+        "label": "Acerca de"
       }
     ]
   },
@@ -47,7 +52,7 @@
         "highlight": "herramientas de desarrollo autogestionadas",
         "description": "Adinet es un ecosistema todo-en-uno para autenticación, datos en tiempo real, permisos y más — escalable y bajo tu control.",
         "ctaPrimary": "Explorar nuestros productos",
-        "ctaSecondary": "Ver documentación"
+        "ctaSecondary": "Sobre Adinet"
       },
       "projects": {
         "sectionTitle": "Nuestras Tecnologías",
@@ -83,22 +88,63 @@
               "Módulo IAM con roles",
               "Lógica de suscripciones incluida"
             ],
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
+          },
+          {
+            "key": "toolkit",
+            "title": "Kit de herramientas open source",
+            "description": "Herramientas y librerías para desarrolladores pensadas para rendimiento y control.",
+            "features": [
+              "Rendimiento primero",
+              "Librerías componibles",
+              "Open source"
+            ],
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       }
     },
+    "indigodb": {
+      "title": "IndigoDB",
+      "tagline": "ORM en tiempo real para Node.js",
+      "description": "IndigoDB es un ORM en tiempo real para Node.js impulsado por triggers de PostgreSQL y change streams de MongoDB. Combina una experiencia de desarrollo tipo Prisma con sincronización de datos en tiempo real.",
+      "metaDescription": "IndigoDB — ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
+      "cta": "Ver en GitHub"
+    },
+    "autorix": {
+      "title": "Autorix",
+      "tagline": "Control de acceso basado en políticas",
+      "description": "Autorix es un sistema de control de acceso basado en políticas inspirado en AWS IAM. Soporta RBAC, ABAC y políticas dinámicas para aplicaciones NestJS y Express.",
+      "metaDescription": "Autorix — control de acceso basado en políticas inspirado en AWS IAM.",
+      "cta": "Ver en GitHub"
+    },
+    "about": {
+      "title": "Sobre Adinet",
+      "description": "Adinet construye un ecosistema de desarrollo autogestionado para aplicaciones modernas: autenticación, datos en tiempo real, permisos y más.",
+      "metaDescription": "Sobre Adinet — ecosistema de desarrollo autogestionado.",
+      "missionTitle": "Nuestra Misión",
+      "missionBody": "Construimos herramientas de desarrollo open source que puedes poseer, controlar y autogestionar. Sin bloqueo, sin cajas negras — infraestructura que escala con tu producto."
+    },
     "docs": {},
     "blog": {},
-    "contact": {},
-    "about": {}
+    "contact": {}
   },
   "footer": {
+    "headings": {
+      "product": "Producto",
+      "company": "Empresa"
+    },
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
         { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
-        { "label": "SaaS Core", "comingSoon": true }
+        { "label": "SaaS Core", "comingSoon": true },
+        { "label": "Kit de herramientas open source", "comingSoon": true }
+      ],
+      "company": [
+        { "label": "Acerca de", "key": "about" }
       ]
     },
     "copyright": "© 2025 Adinet. Todos los derechos reservados."
