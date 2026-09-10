@@ -1,0 +1,40 @@
+---
+import { getTranslations } from "../../libs/getTranslations";
+import Layout from "../../layouts/Layout.astro";
+import ContactForm from "../../components/ContactForm.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en-us" } },
+    { params: { lang: "es-mx" } },
+    { params: { lang: "es-es" } },
+  ];
+}
+
+const lang = Astro.params.lang;
+const t = getTranslations(lang);
+const page = t.pages.contact;
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+---
+
+<Layout
+  lang={lang}
+  t={t}
+  title={page.title}
+  description={page.metaDescription}
+  path="contact"
+>
+  <section
+    class="bg-white dark:bg-[#0F1117] text-[#1a1a1a] dark:text-white pt-32 pb-20 px-6 transition-colors"
+  >
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-5xl sm:text-6xl font-bold leading-tight mb-6">
+        {page.heading}
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-[#B0D3D9] mb-4">
+        {page.description}
+      </p>
+      <ContactForm endpoint={endpoint} t={page} />
+    </div>
+  </section>
+</Layout>

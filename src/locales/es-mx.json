@@ -42,6 +42,10 @@
       {
         "key": "about",
         "label": "Acerca de"
+      },
+      {
+        "key": "contact",
+        "label": "Contacto"
       }
     ]
   },
@@ -129,7 +133,19 @@
     },
     "docs": {},
     "blog": {},
-    "contact": {}
+    "contact": {
+      "title": "Contacto",
+      "metaDescription": "Contacta con Adinet — preguntas, comentarios y colaboración.",
+      "heading": "Ponte en contacto",
+      "description": "Cuéntanos sobre tu proyecto o haz una pregunta. Te responderemos.",
+      "nameLabel": "Nombre",
+      "emailLabel": "Correo electrónico",
+      "messageLabel": "Mensaje",
+      "submitLabel": "Enviar mensaje",
+      "success": "Gracias. Tu mensaje se ha enviado.",
+      "error": "Algo salió mal. Inténtalo de nuevo.",
+      "unavailable": "El formulario de contacto aún no está disponible."
+    }
   },
   "footer": {
     "headings": {
@@ -144,7 +160,8 @@
         { "label": "Kit de herramientas open source", "comingSoon": true }
       ],
       "company": [
-        { "label": "Acerca de", "key": "about" }
+        { "label": "Acerca de", "key": "about" },
+        { "label": "Contacto", "key": "contact" }
       ]
     },
     "copyright": "© 2025 Adinet. Todos los derechos reservados."
