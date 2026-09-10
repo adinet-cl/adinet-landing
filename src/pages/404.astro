@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Page not found | Adinet</title>
+    <meta
+      name="description"
+      content="The page you are looking for does not exist."
+    />
+    <script is:inline>
+      (function () {
+        var theme = localStorage.getItem("theme");
+        if (
+          theme === "dark" ||
+          ((!theme || theme === "system") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-white dark:bg-[#0F1117]">
+    <main class="min-h-screen flex items-center justify-center px-6">
+      <div class="text-center">
+        <p class="text-6xl font-bold text-[#59B0C8]">404</p>
+        <h1
+          class="text-3xl font-bold text-black dark:text-white mt-4 mb-4"
+        >
+          Page not found
+        </h1>
+        <p class="text-gray-600 dark:text-[#B0D3D9] mb-8">
+          The page you are looking for does not exist.
+        </p>
+        <a
+          href="/"
+          class="inline-block bg-[#59B0C8] text-black px-6 py-3 font-semibold rounded-md hover:bg-secondary transition"
+        >
+          Back to home
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

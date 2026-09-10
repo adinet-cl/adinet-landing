@@ -1,0 +1,111 @@
+---
+interface Props {
+  endpoint?: string;
+  t: Record<string, string>;
+}
+
+const { endpoint, t } = Astro.props;
+const hasEndpoint = Boolean(endpoint);
+
+const inputClass =
+  "w-full rounded-md border border-gray-300 dark:border-[#2a2f3a] bg-white dark:bg-[#111317] px-4 py-2 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#59B0C8]";
+---
+
+<form
+  id="contact-form"
+  action={hasEndpoint ? endpoint : undefined}
+  method="POST"
+  class="mt-10 max-w-xl mx-auto text-left space-y-6"
+  data-success={t.success}
+  data-error={t.error}
+>
+  <div>
+    <label for="name" class="block text-sm font-semibold mb-1">
+      {t.nameLabel}
+    </label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      required
+      autocomplete="name"
+      class={inputClass}
+    />
+  </div>
+  <div>
+    <label for="email" class="block text-sm font-semibold mb-1">
+      {t.emailLabel}
+    </label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      class={inputClass}
+    />
+  </div>
+  <div>
+    <label for="message" class="block text-sm font-semibold mb-1">
+      {t.messageLabel}
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="5"
+      class={inputClass}
+    ></textarea>
+  </div>
+  <button
+    type="submit"
+    disabled={!hasEndpoint}
+    class="bg-[#59B0C8] text-black px-6 py-3 font-semibold rounded-md hover:bg-secondary transition disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    {t.submitLabel}
+  </button>
+  {!hasEndpoint && (
+    <p class="text-sm text-gray-500 dark:text-gray-400">{t.unavailable}</p>
+  )}
+  <p id="contact-form-status" class="hidden" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  if (form) {
+    const status = document.getElementById("contact-form-status");
+    form.addEventListener("submit", async (event) => {
+      const action = form.getAttribute("action");
+      if (!action) {
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+      status?.classList.add("hidden");
+
+      try {
+        const response = await fetch(action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+        form.reset();
+        if (status) {
+          status.textContent = form.dataset.success ?? "";
+          status.className =
+            "text-sm font-medium text-green-600 dark:text-green-400";
+        }
+      } catch {
+        if (status) {
+          status.textContent = form.dataset.error ?? "";
+          status.className =
+            "text-sm font-medium text-red-600 dark:text-red-400";
+        }
+      }
+    });
+  }
+</script>
