@@ -51,6 +51,7 @@
   },
   "pages": {
     "home": {
+      "metaDescription": "Adinet — self-hosted developer ecosystem for authentication, realtime data, permissions and more.",
       "hero": {
         "title": "Build your vision with",
         "highlight": "self-hosted developer tools",

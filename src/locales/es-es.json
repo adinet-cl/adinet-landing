@@ -51,6 +51,7 @@
   },
   "pages": {
     "home": {
+      "metaDescription": "Adinet — ecosistema de desarrollo autogestionado para autenticación, datos en tiempo real, permisos y más.",
       "hero": {
         "title": "Construye tu visión con",
         "highlight": "herramientas de desarrollo autogestionadas",
