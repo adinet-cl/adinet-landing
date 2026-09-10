@@ -1,0 +1,43 @@
+---
+import { getTranslations } from "../../libs/getTranslations";
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en-us" } },
+    { params: { lang: "es-mx" } },
+    { params: { lang: "es-es" } },
+  ];
+}
+
+const lang = Astro.params.lang;
+const t = getTranslations(lang);
+const page = t.pages.autorix;
+const repo = "https://github.com/adinet-cl/autorix";
+---
+
+<Layout lang={lang} t={t} title={page.title} description={page.metaDescription}>
+  <section
+    class="bg-white dark:bg-[#0F1117] text-[#1a1a1a] dark:text-white pt-32 pb-20 px-6 transition-colors"
+  >
+    <div class="max-w-5xl mx-auto text-center">
+      <h1 class="text-5xl sm:text-6xl font-bold leading-tight mb-4">
+        {page.title}
+      </h1>
+      <p class="text-xl text-[#59B0C8] mb-8">{page.tagline}</p>
+      <p
+        class="text-lg text-gray-600 dark:text-[#B0D3D9] mb-10 max-w-3xl mx-auto"
+      >
+        {page.description}
+      </p>
+      <a
+        href={repo}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-[#59B0C8] text-black px-6 py-3 font-semibold rounded-md hover:bg-secondary transition"
+      >
+        {page.cta}
+      </a>
+    </div>
+  </section>
+</Layout>
