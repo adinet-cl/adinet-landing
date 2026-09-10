@@ -12,47 +12,31 @@
             "key": "indigodb",
             "title": "IndigoDB",
             "description": "ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
-            "icon": "database"
+            "icon": "database",
+            "href": "https://github.com/adinet-cl/indigodb"
           },
           {
             "key": "autorix",
             "title": "Autorix",
             "description": "Sistema de control de acceso basado en políticas, inspirado en AWS IAM.",
-            "icon": "shield-check"
+            "icon": "shield-check",
+            "href": "https://github.com/adinet-cl/autorix"
           },
           {
             "key": "saasCore",
             "title": "SaaS Core",
             "description": "Plataforma base multi-tenant con IAM, suscripciones y plugins.",
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
           },
           {
             "key": "toolkit",
             "title": "Kit de herramientas open source",
             "description": "Librerías y herramientas para desarrolladores pensadas para rendimiento y control.",
-            "icon": "tool"
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
-      },
-      {
-        "key": "docs",
-        "label": "Documentación",
-        "type": "link"
-      },
-      {
-        "key": "blog",
-        "label": "Blog",
-        "type": "link"
-      },
-      {
-        "key": "about",
-        "label": "Sobre nosotros",
-        "type": "link"
-      },
-      {
-        "key": "contact",
-        "label": "Contacto",
-        "type": "link"
       }
     ]
   },
@@ -111,10 +95,11 @@
   },
   "footer": {
     "sections": {
-      "product": ["IndigoDB", "Autorix", "SaaS Core"],
-      "resources": ["Documentación", "Blog", "Estado del servicio"],
-      "developers": ["Código abierto", "Comunidad", "Contribuir"],
-      "company": ["Sobre nosotros", "Carreras", "Contacto"]
+      "product": [
+        { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
+        { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
+        { "label": "SaaS Core", "comingSoon": true }
+      ]
     },
     "copyright": "© 2025 Adinet. Todos los derechos reservados."
   }

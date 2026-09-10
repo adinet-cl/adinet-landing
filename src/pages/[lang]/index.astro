@@ -1,5 +1,5 @@
 ---
-import { getTranslations } from "../../libs/getTranslatios";
+import { getTranslations } from "../../libs/getTranslations";
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/Hero.astro";
 import Projects from "../../components/Projects.astro";
@@ -11,8 +11,6 @@ export function getStaticPaths() {
     { params: { lang: "es-es" } },
   ];
 }
-
-export const defaultRedirect = "/en-us";
 
 const lang = Astro.params.lang;
 const t = getTranslations(lang);

@@ -12,47 +12,31 @@
             "key": "indigodb",
             "title": "IndigoDB",
             "description": "Realtime ORM for Node.js powered by PostgreSQL and MongoDB.",
-            "icon": "database"
+            "icon": "database",
+            "href": "https://github.com/adinet-cl/indigodb"
           },
           {
             "key": "autorix",
             "title": "Autorix",
             "description": "Policy-based access control system inspired by AWS IAM.",
-            "icon": "shield-check"
+            "icon": "shield-check",
+            "href": "https://github.com/adinet-cl/autorix"
           },
           {
             "key": "saasCore",
             "title": "SaaS Core",
             "description": "Multi-tenant base platform with IAM, subscriptions and plugins.",
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
           },
           {
             "key": "toolkit",
             "title": "Open Source Toolkit",
             "description": "Developer tools and libraries built for performance and control.",
-            "icon": "tool"
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
-      },
-      {
-        "key": "docs",
-        "label": "Docs",
-        "type": "link"
-      },
-      {
-        "key": "blog",
-        "label": "Blog",
-        "type": "link"
-      },
-      {
-        "key": "about",
-        "label": "About",
-        "type": "link"
-      },
-      {
-        "key": "contact",
-        "label": "Contact",
-        "type": "link"
       }
     ]
   },
@@ -111,10 +95,11 @@
   },
   "footer": {
     "sections": {
-      "product": ["IndigoDB", "Autorix", "SaaS Core"],
-      "resources": ["Docs", "Blog", "Status"],
-      "developers": ["Open Source", "Community", "Contributing"],
-      "company": ["About", "Careers", "Contact"]
+      "product": [
+        { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
+        { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
+        { "label": "SaaS Core", "comingSoon": true }
+      ]
     },
     "copyright": "© 2025 Adinet. All rights reserved."
   }
