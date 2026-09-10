@@ -1,6 +1,7 @@
 {
   "lang": "es-es",
   "pageTitle": "Adinet | Ecosistema autogestionado para desarrolladores modernos",
+  "comingSoon": "Próximamente",
   "header": {
     "nav": [
       {
@@ -37,6 +38,10 @@
             "comingSoon": true
           }
         ]
+      },
+      {
+        "key": "about",
+        "label": "Acerca de"
       }
     ]
   },
@@ -47,7 +52,7 @@
         "highlight": "herramientas de desarrollo autogestionadas",
         "description": "Adinet es un ecosistema todo-en-uno para autenticación, datos en tiempo real, permisos y más — escalable y bajo tu control.",
         "ctaPrimary": "Explorar nuestros productos",
-        "ctaSecondary": "Ver documentación"
+        "ctaSecondary": "Sobre Adinet"
       },
       "projects": {
         "sectionTitle": "Nuestras Tecnologías",
@@ -83,7 +88,20 @@
               "Módulo IAM con roles",
               "Lógica de suscripciones incluida"
             ],
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
+          },
+          {
+            "key": "toolkit",
+            "title": "Kit de herramientas open source",
+            "description": "Herramientas y librerías para desarrolladores pensadas para rendimiento y control.",
+            "features": [
+              "Rendimiento primero",
+              "Librerías componibles",
+              "Open source"
+            ],
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       }
@@ -114,11 +132,19 @@
     "contact": {}
   },
   "footer": {
+    "headings": {
+      "product": "Producto",
+      "company": "Empresa"
+    },
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
         { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
-        { "label": "SaaS Core", "comingSoon": true }
+        { "label": "SaaS Core", "comingSoon": true },
+        { "label": "Kit de herramientas open source", "comingSoon": true }
+      ],
+      "company": [
+        { "label": "Acerca de", "key": "about" }
       ]
     },
     "copyright": "© 2025 Adinet. Todos los derechos reservados."

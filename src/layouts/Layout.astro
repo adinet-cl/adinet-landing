@@ -33,7 +33,7 @@ const { lang, t, title, description } = Astro.props;
     <main>
       <slot />
     </main>
-    <Footer t={t.footer} />
+    <Footer lang={lang} t={t.footer} comingSoon={t.comingSoon} />
   </body>
 </html>
 

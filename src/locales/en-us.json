@@ -1,6 +1,7 @@
 {
   "lang": "en-us",
   "pageTitle": "Adinet | Self-hosted developer ecosystem for modern apps",
+  "comingSoon": "Coming soon",
   "header": {
     "nav": [
       {
@@ -37,6 +38,10 @@
             "comingSoon": true
           }
         ]
+      },
+      {
+        "key": "about",
+        "label": "About"
       }
     ]
   },
@@ -47,7 +52,7 @@
         "highlight": "self-hosted developer tools",
         "description": "Adinet is an all-in-one ecosystem for authentication, real-time data, permissions and more — built to scale, owned by you.",
         "ctaPrimary": "Explore our products",
-        "ctaSecondary": "View documentation"
+        "ctaSecondary": "About Adinet"
       },
       "projects": {
         "sectionTitle": "Our Technologies",
@@ -83,7 +88,20 @@
               "IAM module with roles",
               "Subscription logic built-in"
             ],
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
+          },
+          {
+            "key": "toolkit",
+            "title": "Open Source Toolkit",
+            "description": "Developer tools and libraries built for performance and control.",
+            "features": [
+              "Performance-first",
+              "Composable libraries",
+              "Open source"
+            ],
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       }
@@ -114,11 +132,19 @@
     "contact": {}
   },
   "footer": {
+    "headings": {
+      "product": "Product",
+      "company": "Company"
+    },
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
         { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
-        { "label": "SaaS Core", "comingSoon": true }
+        { "label": "SaaS Core", "comingSoon": true },
+        { "label": "Open Source Toolkit", "comingSoon": true }
+      ],
+      "company": [
+        { "label": "About", "key": "about" }
       ]
     },
     "copyright": "© 2025 Adinet. All rights reserved."
