@@ -1,6 +1,7 @@
 {
   "lang": "en-us",
   "pageTitle": "Adinet | Self-hosted developer ecosystem for modern apps",
+  "comingSoon": "Coming soon",
   "header": {
     "nav": [
       {
@@ -37,17 +38,26 @@
             "comingSoon": true
           }
         ]
+      },
+      {
+        "key": "about",
+        "label": "About"
+      },
+      {
+        "key": "contact",
+        "label": "Contact"
       }
     ]
   },
   "pages": {
     "home": {
+      "metaDescription": "Adinet — self-hosted developer ecosystem for authentication, realtime data, permissions and more.",
       "hero": {
         "title": "Build your vision with",
         "highlight": "self-hosted developer tools",
         "description": "Adinet is an all-in-one ecosystem for authentication, real-time data, permissions and more — built to scale, owned by you.",
         "ctaPrimary": "Explore our products",
-        "ctaSecondary": "View documentation"
+        "ctaSecondary": "About Adinet"
       },
       "projects": {
         "sectionTitle": "Our Technologies",
@@ -83,22 +93,76 @@
               "IAM module with roles",
               "Subscription logic built-in"
             ],
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
+          },
+          {
+            "key": "toolkit",
+            "title": "Open Source Toolkit",
+            "description": "Developer tools and libraries built for performance and control.",
+            "features": [
+              "Performance-first",
+              "Composable libraries",
+              "Open source"
+            ],
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       }
     },
+    "indigodb": {
+      "title": "IndigoDB",
+      "tagline": "Realtime ORM for Node.js",
+      "description": "IndigoDB is a realtime ORM for Node.js powered by PostgreSQL triggers and MongoDB change streams. It combines a Prisma-like developer experience with built-in realtime data synchronization.",
+      "metaDescription": "IndigoDB — realtime ORM for Node.js powered by PostgreSQL and MongoDB.",
+      "cta": "View on GitHub"
+    },
+    "autorix": {
+      "title": "Autorix",
+      "tagline": "Policy-based access control",
+      "description": "Autorix is a policy-based access control system inspired by AWS IAM. It supports RBAC, ABAC and dynamic policies for NestJS and Express applications.",
+      "metaDescription": "Autorix — policy-based access control inspired by AWS IAM.",
+      "cta": "View on GitHub"
+    },
+    "about": {
+      "title": "About Adinet",
+      "description": "Adinet builds a self-hosted developer ecosystem for modern applications — authentication, realtime data, permissions and more.",
+      "metaDescription": "About Adinet — self-hosted developer ecosystem for modern apps.",
+      "missionTitle": "Our Mission",
+      "missionBody": "We build open-source developer tools you can own, control and self-host. No lock-in, no black boxes — infrastructure that scales with your product."
+    },
     "docs": {},
     "blog": {},
-    "contact": {},
-    "about": {}
+    "contact": {
+      "title": "Contact",
+      "metaDescription": "Contact Adinet — questions, feedback and collaboration.",
+      "heading": "Get in touch",
+      "description": "Tell us about your project or ask a question. We will get back to you.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "messageLabel": "Message",
+      "submitLabel": "Send message",
+      "success": "Thank you! Your message has been sent.",
+      "error": "Something went wrong. Please try again.",
+      "unavailable": "The contact form is not available yet."
+    }
   },
   "footer": {
+    "headings": {
+      "product": "Product",
+      "company": "Company"
+    },
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
         { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
-        { "label": "SaaS Core", "comingSoon": true }
+        { "label": "SaaS Core", "comingSoon": true },
+        { "label": "Open Source Toolkit", "comingSoon": true }
+      ],
+      "company": [
+        { "label": "About", "key": "about" },
+        { "label": "Contact", "key": "contact" }
       ]
     },
     "copyright": "© 2025 Adinet. All rights reserved."

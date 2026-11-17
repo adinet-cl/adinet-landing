@@ -18,5 +18,9 @@ const t = getTranslations(lang);
 
 <Layout lang={lang} t={t}>
   <Hero lang={lang} t={t.pages.home.hero} />
-  <Projects t={t.pages.home.projects} />
+  <Projects
+    lang={lang}
+    t={t.pages.home.projects}
+    comingSoonLabel={t.comingSoon}
+  />
 </Layout>
