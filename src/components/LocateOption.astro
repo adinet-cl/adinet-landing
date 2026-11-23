@@ -40,12 +40,20 @@ const languages = [
 </div>
 
 <script>
+  const SUPPORTED = ["en-us", "es-mx", "es-es"];
+
   document.addEventListener("DOMContentLoaded", () => {
     const select = document.getElementById("language-select");
     if (select) {
-      select.addEventListener("change", (e: any) => {
-        const lang = e.target.value;
-        window.location.href = `/${lang}`;
+      select.addEventListener("change", (event) => {
+        const target = (event.target as HTMLSelectElement).value;
+        const segments = window.location.pathname.split("/").filter(Boolean);
+        const rest = SUPPORTED.includes(segments[0])
+          ? segments.slice(1)
+          : segments;
+        const next =
+          `/${target}` + (rest.length ? `/${rest.join("/")}` : "/");
+        window.location.href = next;
       });
     }
   });

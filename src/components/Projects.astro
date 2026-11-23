@@ -6,9 +6,10 @@ interface IProject {
   description: string;
   features: string[];
   icon: string;
+  comingSoon?: boolean;
 }
 
-const { t } = Astro.props;
+const { lang, t, comingSoonLabel } = Astro.props;
 ---
 
 <section
@@ -26,6 +27,9 @@ const { t } = Astro.props;
             icon={card.icon}
             description={card.description}
             features={card.features}
+            href={card.comingSoon ? undefined : `/${lang}/${card.key}`}
+            comingSoon={card.comingSoon}
+            comingSoonLabel={comingSoonLabel}
           />
         ))
       }

@@ -1,6 +1,7 @@
 {
   "lang": "es-es",
   "pageTitle": "Adinet | Ecosistema autogestionado para desarrolladores modernos",
+  "comingSoon": "Próximamente",
   "header": {
     "nav": [
       {
@@ -12,58 +13,51 @@
             "key": "indigodb",
             "title": "IndigoDB",
             "description": "ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
-            "icon": "database"
+            "icon": "database",
+            "href": "https://github.com/adinet-cl/indigodb"
           },
           {
             "key": "autorix",
             "title": "Autorix",
             "description": "Sistema de control de acceso basado en políticas, inspirado en AWS IAM.",
-            "icon": "shield-check"
+            "icon": "shield-check",
+            "href": "https://github.com/adinet-cl/autorix"
           },
           {
             "key": "saasCore",
             "title": "SaaS Core",
             "description": "Plataforma base multi-tenant con IAM, suscripciones y plugins.",
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
           },
           {
             "key": "toolkit",
             "title": "Kit de herramientas open source",
             "description": "Librerías y herramientas para desarrolladores pensadas para rendimiento y control.",
-            "icon": "tool"
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       },
       {
-        "key": "docs",
-        "label": "Documentación",
-        "type": "link"
-      },
-      {
-        "key": "blog",
-        "label": "Blog",
-        "type": "link"
-      },
-      {
         "key": "about",
-        "label": "Sobre nosotros",
-        "type": "link"
+        "label": "Acerca de"
       },
       {
         "key": "contact",
-        "label": "Contacto",
-        "type": "link"
+        "label": "Contacto"
       }
     ]
   },
   "pages": {
     "home": {
+      "metaDescription": "Adinet — ecosistema de desarrollo autogestionado para autenticación, datos en tiempo real, permisos y más.",
       "hero": {
         "title": "Construye tu visión con",
         "highlight": "herramientas de desarrollo autogestionadas",
         "description": "Adinet es un ecosistema todo-en-uno para autenticación, datos en tiempo real, permisos y más — escalable y bajo tu control.",
         "ctaPrimary": "Explorar nuestros productos",
-        "ctaSecondary": "Ver documentación"
+        "ctaSecondary": "Sobre Adinet"
       },
       "projects": {
         "sectionTitle": "Nuestras Tecnologías",
@@ -99,22 +93,77 @@
               "Módulo IAM con roles",
               "Lógica de suscripciones incluida"
             ],
-            "icon": "building"
+            "icon": "building",
+            "comingSoon": true
+          },
+          {
+            "key": "toolkit",
+            "title": "Kit de herramientas open source",
+            "description": "Herramientas y librerías para desarrolladores pensadas para rendimiento y control.",
+            "features": [
+              "Rendimiento primero",
+              "Librerías componibles",
+              "Open source"
+            ],
+            "icon": "tool",
+            "comingSoon": true
           }
         ]
       }
     },
+    "indigodb": {
+      "title": "IndigoDB",
+      "tagline": "ORM en tiempo real para Node.js",
+      "description": "IndigoDB es un ORM en tiempo real para Node.js impulsado por triggers de PostgreSQL y change streams de MongoDB. Combina una experiencia de desarrollo tipo Prisma con sincronización de datos en tiempo real.",
+      "metaDescription": "IndigoDB — ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
+      "cta": "Ver en GitHub"
+    },
+    "autorix": {
+      "title": "Autorix",
+      "tagline": "Control de acceso basado en políticas",
+      "description": "Autorix es un sistema de control de acceso basado en políticas inspirado en AWS IAM. Soporta RBAC, ABAC y políticas dinámicas para aplicaciones NestJS y Express.",
+      "metaDescription": "Autorix — control de acceso basado en políticas inspirado en AWS IAM.",
+      "cta": "Ver en GitHub"
+    },
+    "about": {
+      "title": "Sobre Adinet",
+      "description": "Adinet construye un ecosistema de desarrollo autogestionado para aplicaciones modernas: autenticación, datos en tiempo real, permisos y más.",
+      "metaDescription": "Sobre Adinet — ecosistema de desarrollo autogestionado.",
+      "missionTitle": "Nuestra Misión",
+      "missionBody": "Construimos herramientas de desarrollo open source que puedes poseer, controlar y autogestionar. Sin bloqueo, sin cajas negras — infraestructura que escala con tu producto."
+    },
     "docs": {},
     "blog": {},
-    "contact": {},
-    "about": {}
+    "contact": {
+      "title": "Contacto",
+      "metaDescription": "Contacta con Adinet — preguntas, comentarios y colaboración.",
+      "heading": "Ponte en contacto",
+      "description": "Cuéntanos sobre tu proyecto o haz una pregunta. Te responderemos.",
+      "nameLabel": "Nombre",
+      "emailLabel": "Correo electrónico",
+      "messageLabel": "Mensaje",
+      "submitLabel": "Enviar mensaje",
+      "success": "Gracias. Tu mensaje se ha enviado.",
+      "error": "Algo salió mal. Inténtalo de nuevo.",
+      "unavailable": "El formulario de contacto aún no está disponible."
+    }
   },
   "footer": {
+    "headings": {
+      "product": "Producto",
+      "company": "Empresa"
+    },
     "sections": {
-      "product": ["IndigoDB", "Autorix", "SaaS Core"],
-      "resources": ["Documentación", "Blog", "Estado del servicio"],
-      "developers": ["Código abierto", "Comunidad", "Contribuir"],
-      "company": ["Sobre nosotros", "Carreras", "Contacto"]
+      "product": [
+        { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
+        { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
+        { "label": "SaaS Core", "comingSoon": true },
+        { "label": "Kit de herramientas open source", "comingSoon": true }
+      ],
+      "company": [
+        { "label": "Acerca de", "key": "about" },
+        { "label": "Contacto", "key": "contact" }
+      ]
     },
     "copyright": "© 2025 Adinet. Todos los derechos reservados."
   }

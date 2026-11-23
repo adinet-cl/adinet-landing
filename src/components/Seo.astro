@@ -1,0 +1,58 @@
+---
+interface Props {
+  lang: string;
+  path?: string;
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const {
+  lang,
+  path = "",
+  title,
+  description,
+  image = "/og-image.png",
+} = Astro.props;
+
+const locales = ["en-us", "es-mx", "es-es"];
+
+const site = Astro.site ? Astro.site.toString() : "";
+const origin = site.replace(/\/+$/, "");
+const localePath = path ? `/${path}` : "";
+const canonical = `${origin}/${lang}${localePath}/`;
+
+const ogLocales: Record<string, string> = {
+  "en-us": "en_US",
+  "es-mx": "es_MX",
+  "es-es": "es_ES",
+};
+
+const ogImage = image.startsWith("http") ? image : `${origin}${image}`;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{
+  locales.map((locale) => (
+    <link
+      rel="alternate"
+      hreflang={locale}
+      href={`${origin}/${locale}${localePath}/`}
+    />
+  ))
+}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href={`${origin}/en-us${localePath}/`}
+/>
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={ogLocales[lang] || "en_US"} />
