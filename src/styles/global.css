@@ -6,3 +6,548 @@
   --color-primary: #59b0c8;
   --color-secondary: #4a94aa;
 }
+
+/* Accessible visually-hidden utility (opt-out on focus-within/active for skip links) */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Global focus indicator for docs interactive controls */
+.docs-shell :where(a:any-link, button, summary, input, [tabindex="0"]):focus-visible {
+  outline: 2px solid #59b0c8;
+  outline-offset: 2px;
+}
+
+/* Native <dialog> modal scroll containment (per modern-web-guidance dialog) */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* ============================================================================
+   Mobile Navigation Drawer (<dialog> + horizontal scroll-snap + scroll-driven backdrop)
+   ============================================================================ */
+.docs-drawer {
+  --drawer-width: min(20.5rem, 84dvw, 100dvw - 24px);
+  --drawer-backdrop: 0;
+
+  inset: 0;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  overflow: visible;
+}
+
+.docs-drawer::backdrop {
+  background: #000;
+  opacity: calc(var(--drawer-backdrop) * 0.55);
+}
+
+.docs-drawer-scroller {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--drawer-width) 100%;
+  overflow-x: scroll;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .docs-drawer-scroller {
+    scroll-behavior: smooth;
+  }
+}
+
+.docs-drawer-scroller::after {
+  content: "";
+  scroll-snap-align: end;
+  scroll-initial-target: nearest;
+}
+
+.docs-drawer-sheet {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100svh;
+  overflow-y: auto;
+  scroll-snap-align: start;
+}
+
+@supports (animation-timeline: scroll()) {
+  .docs-drawer {
+    timeline-scope: --docs-drawer-fade;
+    animation: docs-fade-drawer-backdrop linear both;
+    animation-timeline: --docs-drawer-fade;
+  }
+
+  .docs-drawer-scroller {
+    scroll-timeline: --docs-drawer-fade x;
+  }
+
+  @property --drawer-backdrop {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+
+  @keyframes docs-fade-drawer-backdrop {
+    0% {
+      --drawer-backdrop: 1;
+    }
+    100% {
+      --drawer-backdrop: 0;
+    }
+  }
+}
+
+/* ============================================================================
+   Docs Search Modal (<dialog closedby="any">)
+   ============================================================================ */
+.docs-search-dialog {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: min(38rem, calc(100dvh - 4rem));
+  margin: min(10vh, 5rem) auto auto;
+  padding: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.docs-search-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-search-dialog::backdrop {
+  background: rgba(8, 11, 16, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+/* ============================================================================
+   Sidebar Collapsible Sections (<details> accordion per modern-web-guidance)
+   ============================================================================ */
+.docs-nav-group summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.docs-nav-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.docs-nav-group summary::before {
+  content: "";
+  inline-size: 0.85em;
+  block-size: 0.85em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  opacity: 0.7;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8l4 4 4-4'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  rotate: -90deg;
+}
+
+.docs-nav-group[open] > summary::before {
+  rotate: 0deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .docs-nav-group summary::before {
+    transition: rotate 0.18s ease;
+  }
+}
+
+.docs-nav-group::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+.docs-nav-group:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .docs-nav-group::details-content {
+    transition: block-size 0.22s ease, content-visibility 0.22s ease;
+    transition-behavior: allow-discrete;
+  }
+}
+
+/* ============================================================================
+   Markdown Documentation Prose Typography, Tables & Dark Code Blocks
+   ============================================================================ */
+.docs-prose {
+  font-size: 0.975rem;
+  line-height: 1.72;
+  color: #27303f;
+}
+
+.dark .docs-prose {
+  color: #cdd9e5;
+}
+
+.docs-prose > *:first-child {
+  margin-top: 0;
+}
+
+.docs-prose h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 1rem;
+}
+
+.dark .docs-prose h1 {
+  color: #f8fafc;
+}
+
+.docs-prose h2 {
+  font-size: 1.4rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #0f172a;
+  margin-top: 2.5rem;
+  margin-bottom: 0.85rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  scroll-margin-top: 6rem;
+}
+
+.dark .docs-prose h2 {
+  color: #f8fafc;
+  border-top-color: #1f2430;
+}
+
+.docs-prose h3 {
+  font-size: 1.125rem;
+  line-height: 1.38;
+  font-weight: 600;
+  color: #0f172a;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  scroll-margin-top: 6rem;
+}
+
+.dark .docs-prose h3 {
+  color: #f1f5f9;
+}
+
+.docs-prose h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  scroll-margin-top: 6rem;
+}
+
+.dark .docs-prose h4 {
+  color: #e2e8f0;
+}
+
+.docs-prose .docs-heading-anchor {
+  margin-left: 0.45rem;
+  color: #59b0c8;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.docs-prose :is(h2, h3):hover .docs-heading-anchor,
+.docs-prose .docs-heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.docs-prose p {
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+}
+
+.docs-prose a:not(.docs-heading-anchor) {
+  color: #1e7f9b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(89, 176, 200, 0.5);
+  font-weight: 500;
+}
+
+.dark .docs-prose a:not(.docs-heading-anchor) {
+  color: #6bc4dc;
+}
+
+.docs-prose a:not(.docs-heading-anchor):hover {
+  text-decoration-color: currentColor;
+}
+
+.docs-prose strong {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dark .docs-prose strong {
+  color: #ffffff;
+}
+
+.docs-prose ul,
+.docs-prose ol {
+  margin: 0.75rem 0 1.25rem;
+  padding-left: 1.45rem;
+}
+
+.docs-prose ul {
+  list-style-type: disc;
+}
+
+.docs-prose ol {
+  list-style-type: decimal;
+}
+
+.docs-prose li {
+  margin-bottom: 0.4rem;
+}
+
+.docs-prose li > ul,
+.docs-prose li > ol {
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Task lists (GFM checklists) */
+.docs-prose ul.contains-task-list {
+  list-style: none;
+  padding-left: 0.25rem;
+}
+
+.docs-prose li.task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.docs-prose li.task-list-item input[type="checkbox"] {
+  margin-top: 0.35rem;
+  accent-color: #59b0c8;
+  flex-shrink: 0;
+}
+
+.docs-prose hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+.dark .docs-prose hr {
+  border-top-color: #1f2430;
+}
+
+/* Blockquotes / Callouts */
+.docs-prose blockquote {
+  margin: 1.25rem 0;
+  padding: 0.9rem 1.15rem;
+  border-left: 3px solid #59b0c8;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background-color: #f1f8fa;
+  color: #1e3a46;
+}
+
+.dark .docs-prose blockquote {
+  background-color: rgba(89, 176, 200, 0.08);
+  color: #cbe3ea;
+}
+
+.docs-prose blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code */
+.docs-prose :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85em;
+  padding: 0.14rem 0.4rem;
+  border-radius: 0.3rem;
+  background-color: #eef2f6;
+  color: #0f4c5c;
+  border: 1px solid #dde5ee;
+  word-break: break-word;
+}
+
+.dark .docs-prose :not(pre) > code {
+  background-color: #171c26;
+  color: #8ad6ea;
+  border-color: #252d3d;
+}
+
+/* Code blocks: always dark color-scheme with explicit background and foreground
+   (per modern-web-guidance component-specific-light-dark-theme) */
+.docs-code-block {
+  color-scheme: only dark;
+  background-color: #0d1117;
+  color: #e6edf3;
+  border: 1px solid #262c36;
+  border-radius: 0.65rem;
+  margin: 1.25rem 0;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.docs-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.9rem;
+  background-color: #161b22;
+  border-bottom: 1px solid #262c36;
+  font-size: 0.75rem;
+}
+
+.docs-code-lang {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8b949e;
+  font-weight: 600;
+}
+
+.docs-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-block-size: 1.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.375rem;
+  border: 1px solid #30363d;
+  background-color: #21262d;
+  color: #e6edf3;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.docs-copy-btn:hover {
+  background-color: #30363d;
+  border-color: #59b0c8;
+}
+
+.docs-copy-btn[data-copied="true"] {
+  border-color: #59b0c8;
+  color: #7ee0f6;
+}
+
+.docs-code-block pre {
+  margin: 0 !important;
+  padding: 1rem 1.1rem !important;
+  overflow-x: auto;
+  background-color: #0d1117 !important;
+  font-size: 0.84rem;
+  line-height: 1.62;
+  tab-size: 2;
+}
+
+.docs-code-block pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: inherit;
+}
+
+/* Responsive Data Tables (per modern-web-guidance responsive-table) */
+.docs-table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  max-block-size: min(560px, 75vh);
+  container-type: inline-size;
+  margin: 1.35rem 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+  background-color: #ffffff;
+}
+
+.dark .docs-table-wrapper {
+  border-color: #232936;
+  background-color: #11141b;
+}
+
+.docs-table-wrapper table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.docs-table-wrapper thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+.docs-table-wrapper th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.7rem 0.9rem;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.dark .docs-table-wrapper th {
+  background-color: #171c26;
+  color: #f1f5f9;
+  border-bottom-color: #262e3d;
+}
+
+.docs-table-wrapper td {
+  padding: 0.68rem 0.9rem;
+  border-bottom: 1px solid #edf2f7;
+  vertical-align: top;
+  min-width: 7rem;
+}
+
+.docs-table-wrapper td:first-child {
+  white-space: nowrap;
+}
+
+.docs-table-wrapper td code {
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.dark .docs-table-wrapper td {
+  border-bottom-color: #1d2330;
+}
+
+.docs-table-wrapper tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.docs-table-wrapper tbody tr:hover td {
+  background-color: rgba(89, 176, 200, 0.05);
+}

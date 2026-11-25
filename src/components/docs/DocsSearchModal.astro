@@ -1,0 +1,301 @@
+---
+interface Props {
+  lang: string;
+  ui: {
+    searchTitle: string;
+    searchPlaceholder: string;
+    searchEmpty: string;
+    searchHint: string;
+    closeLabel: string;
+    resultsSingular: string;
+    resultsPlural: string;
+  };
+}
+
+const { lang, ui } = Astro.props;
+const indexUrl = `/${lang}/autorix/search-index.json`;
+---
+
+<dialog
+  id="autorix-search-dialog"
+  class="docs-search-dialog bg-white dark:bg-[#131720] text-gray-900 dark:text-white border border-gray-200 dark:border-[#262d3d] shadow-2xl"
+  closedby="any"
+  aria-labelledby="autorix-search-title"
+  data-index-url={indexUrl}
+  data-empty-text={ui.searchEmpty}
+  data-hint-text={ui.searchHint}
+  data-singular={ui.resultsSingular}
+  data-plural={ui.resultsPlural}
+>
+  <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-[#262d3d]">
+    <h1 id="autorix-search-title" class="visually-hidden">
+      {ui.searchTitle}
+    </h1>
+    <svg
+      class="w-5 h-5 text-gray-400 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+    <label for="autorix-search-input" class="visually-hidden">
+      {ui.searchTitle}
+    </label>
+    <input
+      id="autorix-search-input"
+      type="search"
+      autocomplete="off"
+      autofocus
+      placeholder={ui.searchPlaceholder}
+      class="w-full bg-transparent text-base text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none"
+    />
+    <button
+      type="button"
+      id="autorix-search-close"
+      aria-label={ui.closeLabel}
+      class="shrink-0 min-h-[32px] min-w-[32px] px-2 rounded-md border border-gray-200 dark:border-[#2c3446] text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-[#59B0C8] transition-colors cursor-pointer"
+    >
+      ESC
+    </button>
+  </div>
+
+  <div
+    id="autorix-search-status"
+    class="visually-hidden"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+  </div>
+
+  <div
+    id="autorix-search-results"
+    class="overflow-y-auto p-3 space-y-1.5 flex-1 min-h-[12rem]"
+  >
+    <p class="text-sm text-gray-500 dark:text-gray-400 px-3 py-6 text-center">
+      {ui.searchHint}
+    </p>
+  </div>
+</dialog>
+
+<script>
+  interface SearchEntry {
+    title: string;
+    description: string;
+    section: string;
+    href: string;
+    headings: string[];
+    excerpt: string;
+  }
+
+  const dialog = document.getElementById(
+    "autorix-search-dialog"
+  ) as HTMLDialogElement | null;
+  const input = document.getElementById(
+    "autorix-search-input"
+  ) as HTMLInputElement | null;
+  const closeBtn = document.getElementById("autorix-search-close");
+  const resultsEl = document.getElementById("autorix-search-results");
+  const statusEl = document.getElementById("autorix-search-status");
+  const openTriggers = document.querySelectorAll<HTMLButtonElement>(
+    "[data-open-docs-search]"
+  );
+
+  if (dialog && input && resultsEl && statusEl) {
+    const indexUrl = dialog.dataset.indexUrl || "";
+    const emptyText = dialog.dataset.emptyText || "No matching documentation.";
+    const hintText = dialog.dataset.hintText || "Type to search documentation.";
+    const singular = dialog.dataset.singular || "result";
+    const plural = dialog.dataset.plural || "results";
+
+    let cachedIndex: SearchEntry[] | null = null;
+    let loadingPromise: Promise<SearchEntry[]> | null = null;
+
+    const loadIndex = async (): Promise<SearchEntry[]> => {
+      if (cachedIndex) return cachedIndex;
+      if (!loadingPromise) {
+        loadingPromise = fetch(indexUrl)
+          .then((res) => (res.ok ? res.json() : []))
+          .then((data: SearchEntry[]) => {
+            cachedIndex = Array.isArray(data) ? data : [];
+            return cachedIndex;
+          })
+          .catch(() => []);
+      }
+      return loadingPromise;
+    };
+
+    const normalize = (str: string) =>
+      str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    const renderList = (entries: SearchEntry[], query: string) => {
+      resultsEl.innerHTML = "";
+      const trimmed = query.trim();
+
+      if (!trimmed) {
+        const list = document.createElement("ul");
+        list.className = "space-y-1";
+        entries.slice(0, 8).forEach((entry) => {
+          list.appendChild(createResultItem(entry));
+        });
+        resultsEl.appendChild(list);
+        statusEl.textContent = hintText;
+        return;
+      }
+
+      const terms = normalize(trimmed).split(/\s+/).filter(Boolean);
+      const scored = entries
+        .map((entry) => {
+          const titleNorm = normalize(entry.title);
+          const sectionNorm = normalize(entry.section);
+          const descNorm = normalize(entry.description);
+          const headingsNorm = normalize(entry.headings.join(" "));
+          const excerptNorm = normalize(entry.excerpt);
+
+          let score = 0;
+          for (const term of terms) {
+            let termMatched = false;
+            if (titleNorm.includes(term)) {
+              score += 12;
+              termMatched = true;
+            }
+            if (headingsNorm.includes(term)) {
+              score += 6;
+              termMatched = true;
+            }
+            if (sectionNorm.includes(term)) {
+              score += 4;
+              termMatched = true;
+            }
+            if (descNorm.includes(term)) {
+              score += 3;
+              termMatched = true;
+            }
+            if (excerptNorm.includes(term)) {
+              score += 1;
+              termMatched = true;
+            }
+            if (!termMatched) return { entry, score: 0 };
+          }
+          return { entry, score };
+        })
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 12);
+
+      if (scored.length === 0) {
+        const p = document.createElement("p");
+        p.className =
+          "text-sm text-gray-500 dark:text-gray-400 px-3 py-8 text-center";
+        p.textContent = emptyText;
+        resultsEl.appendChild(p);
+        statusEl.textContent = emptyText;
+        return;
+      }
+
+      const list = document.createElement("ul");
+      list.className = "space-y-1";
+      scored.forEach(({ entry }) => {
+        list.appendChild(createResultItem(entry));
+      });
+      resultsEl.appendChild(list);
+      statusEl.textContent = `${scored.length} ${scored.length === 1 ? singular : plural}`;
+    };
+
+    const createResultItem = (entry: SearchEntry) => {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = entry.href;
+      link.className =
+        "block rounded-lg px-3 py-2.5 hover:bg-[#59B0C8]/12 focus:bg-[#59B0C8]/15 transition-colors";
+
+      const top = document.createElement("div");
+      top.className = "flex items-center justify-between gap-2";
+
+      const title = document.createElement("span");
+      title.className = "font-semibold text-sm text-gray-900 dark:text-white";
+      title.textContent = entry.title;
+
+      const badge = document.createElement("span");
+      badge.className =
+        "shrink-0 text-[11px] font-medium px-2 py-0.5 rounded bg-gray-100 dark:bg-[#1E2430] text-gray-600 dark:text-[#89B4C2]";
+      badge.textContent = entry.section;
+
+      top.append(title, badge);
+
+      const desc = document.createElement("p");
+      desc.className =
+        "text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2";
+      desc.textContent = entry.description;
+
+      link.append(top, desc);
+      li.appendChild(link);
+      return li;
+    };
+
+    const openSearch = async () => {
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+      input.focus();
+      const entries = await loadIndex();
+      renderList(entries, input.value);
+    };
+
+    openTriggers.forEach((btn) => btn.addEventListener("click", openSearch));
+    closeBtn?.addEventListener("click", () => dialog.close());
+
+    dialog.addEventListener("close", () => {
+      dialog.returnValue = "";
+    });
+
+    let debounceTimer: number | undefined;
+    input.addEventListener("input", () => {
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(async () => {
+        const entries = await loadIndex();
+        renderList(entries, input.value);
+      }, 90);
+    });
+
+    // Global Cmd/Ctrl + K shortcut
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        if (dialog.open) {
+          dialog.close();
+        } else {
+          openSearch();
+        }
+      }
+    });
+
+    // Fallback light-dismiss for browsers without native closedby="any" (Safari)
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+      const outside = (e: PointerEvent) => {
+        const r = dialog.getBoundingClientRect();
+        return (
+          e.clientX < r.left ||
+          e.clientX > r.right ||
+          e.clientY < r.top ||
+          e.clientY > r.bottom
+        );
+      };
+      let pressedOutside = false;
+      dialog.addEventListener("pointerdown", (e) => {
+        pressedOutside = outside(e);
+      });
+      dialog.addEventListener("pointerup", (e) => {
+        if (pressedOutside && outside(e)) {
+          dialog.close();
+        }
+      });
+    }
+  }
+</script>

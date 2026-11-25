@@ -19,9 +19,8 @@
           {
             "key": "autorix",
             "title": "Autorix",
-            "description": "Policy-based access control system inspired by AWS IAM.",
-            "icon": "shield-check",
-            "href": "https://github.com/adinet-cl/autorix"
+            "description": "Zero-Trust IAM suite with Zanzibar ReBAC, ABAC CEL, OAuth2/OIDC, PEP proxy & Macaroons.",
+            "icon": "shield-check"
           },
           {
             "key": "saasCore",
@@ -76,11 +75,11 @@
           {
             "key": "autorix",
             "title": "Autorix",
-            "description": "Permission system inspired by AWS IAM. Supports RBAC, ABAC and dynamic policies.",
+            "description": "Zero-Trust IAM suite built with 8 independent Go engines and a Next.js 15 Admin Console.",
             "features": [
-              "RBAC & ABAC",
-              "Policy conditions",
-              "NestJS & Express compatible"
+              "Zanzibar ReBAC & ABAC CEL",
+              "OAuth2/OIDC, WebAuthn & PEP Proxy",
+              "Go, TypeScript & Python SDKs"
             ],
             "icon": "shield-check"
           },
@@ -120,10 +119,101 @@
     },
     "autorix": {
       "title": "Autorix",
-      "tagline": "Policy-based access control",
-      "description": "Autorix is a policy-based access control system inspired by AWS IAM. It supports RBAC, ABAC and dynamic policies for NestJS and Express applications.",
-      "metaDescription": "Autorix — policy-based access control inspired by AWS IAM.",
-      "cta": "View on GitHub"
+      "tagline": "Next-Generation Zero-Trust IAM Suite",
+      "description": "Modular, self-hosted Identity and Access Management suite with Google Zanzibar ReBAC, ABAC CEL, OAuth2/OIDC, Zero-Trust PEP proxy, Macaroon API keys, SAML/SCIM federation, and cryptographic audit trails.",
+      "metaDescription": "Autorix documentation — self-hosted Zero-Trust IAM suite with Zanzibar ReBAC, ABAC CEL, OAuth2/OIDC, PEP proxy, Macaroons, and SHA-256 audit logging.",
+      "cta": "View on GitHub",
+      "docsUi": {
+        "skipToContent": "Skip to documentation content",
+        "sidebarLabel": "Autorix documentation",
+        "breadcrumbLabel": "Breadcrumb",
+        "paginationLabel": "Documentation pagination",
+        "onThisPage": "On this page",
+        "menuButton": "Docs menu",
+        "searchButton": "Search docs...",
+        "searchTitle": "Search Autorix documentation",
+        "searchPlaceholder": "Search engines, endpoints, SDKs, runbooks...",
+        "searchEmpty": "No matching documentation pages found.",
+        "searchHint": "Type keywords like nexus, oauth, webauthn, helm, or macaroon.",
+        "resultsSingular": "result",
+        "resultsPlural": "results",
+        "closeLabel": "Close",
+        "previousPage": "Previous",
+        "nextPage": "Next",
+        "copyCode": "Copy",
+        "copiedCode": "Copied",
+        "portsLabel": "Ports",
+        "quickStartCta": "Quick Start (Docker)",
+        "architectureCta": "Master Architecture",
+        "viewGithub": "View on GitHub",
+        "reportIssue": "Report an issue",
+        "enginesGridLabel": "Autorix core components"
+      },
+      "engineCards": [
+        {
+          "name": "Nexus",
+          "tag": "ReBAC",
+          "summary": "Google Zanzibar tuple graph with APL compiler, cycle detection, and CEL caveats.",
+          "ports": ":8080 · :50051",
+          "slug": "engines/nexus"
+        },
+        {
+          "name": "Themis",
+          "tag": "ABAC CEL",
+          "summary": "Sub-millisecond Google CEL policy engine with priority rings, rollback, and fixtures.",
+          "ports": ":4488 · :50052",
+          "slug": "engines/themis"
+        },
+        {
+          "name": "Ego",
+          "tag": "Identity",
+          "summary": "JSON Schema traits, Argon2id (64 MB), RFC 6238 TOTP MFA, and FIDO2 WebAuthn Passkeys.",
+          "ports": ":4433",
+          "slug": "engines/ego"
+        },
+        {
+          "name": "Janus",
+          "tag": "OAuth2 / OIDC",
+          "summary": "PKCE S256, RS256 JWKS rotation, refresh family revocation, and private admin listener.",
+          "ports": ":4444 · :4445",
+          "slug": "engines/janus"
+        },
+        {
+          "name": "Aegis",
+          "tag": "PEP Proxy",
+          "summary": "Zero-Trust reverse proxy enforcing auth, ReBAC/ABAC, and HMAC signed identity headers.",
+          "ports": ":4455 · :4456",
+          "slug": "engines/aegis"
+        },
+        {
+          "name": "Vulcan",
+          "tag": "Macaroons",
+          "summary": "Prefixed API keys (av_live_/av_test_) with offline HMAC-SHA256 caveat attenuation.",
+          "ports": ":4466",
+          "slug": "engines/vulcan"
+        },
+        {
+          "name": "Hermes",
+          "tag": "SAML / SCIM",
+          "summary": "Enterprise federation bridge for Okta, Entra ID, and Google via SAML 2.0 & SCIM 2.0.",
+          "ports": ":4477",
+          "slug": "engines/hermes"
+        },
+        {
+          "name": "Argus",
+          "tag": "Control Plane",
+          "summary": "Fleet enrollment tokens (aet_), gRPC heartbeats, and tamper-evident SHA-256 audit chain.",
+          "ports": ":4400 · :50053",
+          "slug": "control-plane/argus"
+        },
+        {
+          "name": "Console",
+          "tag": "Next.js 15 UI",
+          "summary": "Secure BFF admin portal with 9 Studio workspaces and live Merkle chain verification.",
+          "ports": ":3000",
+          "slug": "control-plane/console"
+        }
+      ]
     },
     "about": {
       "title": "About Adinet",
@@ -156,7 +246,7 @@
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
-        { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
+        { "label": "Autorix", "key": "autorix" },
         { "label": "SaaS Core", "comingSoon": true },
         { "label": "Open Source Toolkit", "comingSoon": true }
       ],

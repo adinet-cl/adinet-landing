@@ -19,9 +19,8 @@
           {
             "key": "autorix",
             "title": "Autorix",
-            "description": "Sistema de control de acceso basado en políticas, inspirado en AWS IAM.",
-            "icon": "shield-check",
-            "href": "https://github.com/adinet-cl/autorix"
+            "description": "Suite IAM Zero-Trust con ReBAC Zanzibar, ABAC CEL, OAuth2/OIDC, proxy PEP y Macaroons.",
+            "icon": "shield-check"
           },
           {
             "key": "saasCore",
@@ -76,11 +75,11 @@
           {
             "key": "autorix",
             "title": "Autorix",
-            "description": "Sistema de permisos inspirado en AWS IAM. Compatible con RBAC, ABAC y políticas dinámicas.",
+            "description": "Suite IAM Zero-Trust construida con 8 microservicios Go independientes y Consola Next.js 15.",
             "features": [
-              "RBAC y ABAC",
-              "Condiciones en políticas",
-              "Compatible con NestJS y Express"
+              "ReBAC Zanzibar y ABAC CEL",
+              "OAuth2/OIDC, WebAuthn y Proxy PEP",
+              "SDKs en Go, TypeScript y Python"
             ],
             "icon": "shield-check"
           },
@@ -120,10 +119,101 @@
     },
     "autorix": {
       "title": "Autorix",
-      "tagline": "Control de acceso basado en políticas",
-      "description": "Autorix es un sistema de control de acceso basado en políticas inspirado en AWS IAM. Soporta RBAC, ABAC y políticas dinámicas para aplicaciones NestJS y Express.",
-      "metaDescription": "Autorix — control de acceso basado en políticas inspirado en AWS IAM.",
-      "cta": "Ver en GitHub"
+      "tagline": "Suite IAM Zero-Trust de Próxima Generación",
+      "description": "Suite modular y autogestionada de Identidad y Control de Acceso con ReBAC Google Zanzibar, ABAC CEL, OAuth2/OIDC, proxy PEP Zero-Trust, API keys Macaroon, federación SAML/SCIM y auditoría criptográfica.",
+      "metaDescription": "Documentación de Autorix — suite IAM Zero-Trust autogestionada con ReBAC Zanzibar, ABAC CEL, OAuth2/OIDC, proxy PEP, Macaroons y auditoría SHA-256.",
+      "cta": "Ver en GitHub",
+      "docsUi": {
+        "skipToContent": "Saltar al contenido de la documentación",
+        "sidebarLabel": "Documentación de Autorix",
+        "breadcrumbLabel": "Ruta de navegación",
+        "paginationLabel": "Paginación de documentación",
+        "onThisPage": "En esta página",
+        "menuButton": "Menú docs",
+        "searchButton": "Buscar en docs...",
+        "searchTitle": "Buscar en la documentación de Autorix",
+        "searchPlaceholder": "Buscar motores, endpoints, SDKs, runbooks...",
+        "searchEmpty": "No se encontraron páginas que coincidan.",
+        "searchHint": "Escribe términos como nexus, oauth, webauthn, helm o macaroon.",
+        "resultsSingular": "resultado",
+        "resultsPlural": "resultados",
+        "closeLabel": "Cerrar",
+        "previousPage": "Anterior",
+        "nextPage": "Siguiente",
+        "copyCode": "Copiar",
+        "copiedCode": "Copiado",
+        "portsLabel": "Puertos",
+        "quickStartCta": "Inicio Rápido (Docker)",
+        "architectureCta": "Arquitectura Maestra",
+        "viewGithub": "Ver en GitHub",
+        "reportIssue": "Reportar un problema",
+        "enginesGridLabel": "Componentes principales de Autorix"
+      },
+      "engineCards": [
+        {
+          "name": "Nexus",
+          "tag": "ReBAC",
+          "summary": "Grafo de tuplas Google Zanzibar con compilador APL, detección de ciclos y caveats CEL.",
+          "ports": ":8080 · :50051",
+          "slug": "engines/nexus"
+        },
+        {
+          "name": "Themis",
+          "tag": "ABAC CEL",
+          "summary": "Motor de políticas Google CEL submilisegundo con anillos de prioridad, rollback y fixtures.",
+          "ports": ":4488 · :50052",
+          "slug": "engines/themis"
+        },
+        {
+          "name": "Ego",
+          "tag": "Identidad",
+          "summary": "Traits JSON Schema, Argon2id (64 MB), MFA TOTP RFC 6238 y Passkeys FIDO2 WebAuthn.",
+          "ports": ":4433",
+          "slug": "engines/ego"
+        },
+        {
+          "name": "Janus",
+          "tag": "OAuth2 / OIDC",
+          "summary": "PKCE S256, rotación JWKS RS256, revocación por familia de refresh y listener admin privado.",
+          "ports": ":4444 · :4445",
+          "slug": "engines/janus"
+        },
+        {
+          "name": "Aegis",
+          "tag": "Proxy PEP",
+          "summary": "Proxy inverso Zero-Trust con autenticación, ReBAC/ABAC y firma HMAC de cabeceras.",
+          "ports": ":4455 · :4456",
+          "slug": "engines/aegis"
+        },
+        {
+          "name": "Vulcan",
+          "tag": "Macaroons",
+          "summary": "API keys con prefijo (av_live_/av_test_) y atenuación offline HMAC-SHA256.",
+          "ports": ":4466",
+          "slug": "engines/vulcan"
+        },
+        {
+          "name": "Hermes",
+          "tag": "SAML / SCIM",
+          "summary": "Federación empresarial para Okta, Entra ID y Google vía SAML 2.0 y SCIM 2.0.",
+          "ports": ":4477",
+          "slug": "engines/hermes"
+        },
+        {
+          "name": "Argus",
+          "tag": "Plano Control",
+          "summary": "Tokens de enrolamiento (aet_), latidos gRPC y cadena de auditoría SHA-256 inmutable.",
+          "ports": ":4400 · :50053",
+          "slug": "control-plane/argus"
+        },
+        {
+          "name": "Console",
+          "tag": "UI Next.js 15",
+          "summary": "Portal administrativo BFF seguro con 9 Studios y verificación Merkle en vivo.",
+          "ports": ":3000",
+          "slug": "control-plane/console"
+        }
+      ]
     },
     "about": {
       "title": "Sobre Adinet",
@@ -156,7 +246,7 @@
     "sections": {
       "product": [
         { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
-        { "label": "Autorix", "href": "https://github.com/adinet-cl/autorix" },
+        { "label": "Autorix", "key": "autorix" },
         { "label": "SaaS Core", "comingSoon": true },
         { "label": "Kit de herramientas open source", "comingSoon": true }
       ],

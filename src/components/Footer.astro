@@ -38,6 +38,10 @@ const { lang, t, comingSoon } = Astro.props;
                 >
                   {item.label}
                 </a>
+              ) : item.key ? (
+                <a href={`/${lang}/${item.key}`} class="hover:underline">
+                  {item.label}
+                </a>
               ) : (
                 <span class="opacity-60">{item.label} — {comingSoon}</span>
               )}

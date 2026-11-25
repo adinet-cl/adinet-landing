@@ -1,0 +1,129 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+  label: string;
+  githubUrl: string;
+  githubLabel: string;
+  issuesLabel: string;
+}
+
+const { headings, label, githubUrl, githubLabel, issuesLabel } = Astro.props;
+const tocItems = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<aside class="hidden xl:block w-60 shrink-0">
+  <div class="sticky top-[89px] max-h-[calc(100vh-105px)] overflow-y-auto pl-4 pb-8">
+    {
+      tocItems.length > 0 && (
+        <nav aria-label={label} data-docs-toc>
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#89B4C2] mb-3">
+            {label}
+          </p>
+          <ul class="space-y-1.5 text-sm border-l border-gray-200 dark:border-[#1f2633]">
+            {tocItems.map((heading) => (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  data-toc-link={heading.slug}
+                  class:list={[
+                    "block py-1 transition-colors border-l-2 -ml-px border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white hover:border-gray-400 dark:hover:border-gray-500",
+                    heading.depth === 3 ? "pl-6 text-xs" : "pl-3.5",
+                  ]}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <div class="mt-8 pt-5 border-t border-gray-200 dark:border-[#1f2633] space-y-2 text-xs">
+      <a
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors py-1"
+      >
+        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z" />
+        </svg>
+        <span>{githubLabel}</span>
+      </a>
+      <a
+        href={`${githubUrl}/issues`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors py-1"
+      >
+        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <span>{issuesLabel}</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<script>
+  const tocLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]")
+  );
+
+  if (tocLinks.length > 0) {
+    const linkBySlug = new Map(
+      tocLinks.map((link) => [link.dataset.tocLink || "", link])
+    );
+
+    const headingElements = tocLinks
+      .map((link) => document.getElementById(link.dataset.tocLink || ""))
+      .filter((el): el is HTMLElement => el !== null);
+
+    let activeSlug = "";
+
+    const setActive = (slug: string) => {
+      if (!slug || slug === activeSlug) return;
+      activeSlug = slug;
+      for (const link of tocLinks) {
+        const match = link.dataset.tocLink === slug;
+        link.classList.toggle("border-[#59B0C8]", match);
+        link.classList.toggle("text-[#0e6b85]", match);
+        link.classList.toggle("dark:text-[#7AD4EC]", match);
+        link.classList.toggle("font-medium", match);
+        link.classList.toggle("border-transparent", !match);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+          );
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-96px 0px -65% 0px",
+        threshold: 0,
+      }
+    );
+
+    headingElements.forEach((el) => observer.observe(el));
+
+    if (headingElements[0] && linkBySlug.has(headingElements[0].id)) {
+      setActive(headingElements[0].id);
+    }
+  }
+</script>

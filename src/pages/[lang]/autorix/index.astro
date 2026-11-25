@@ -1,0 +1,88 @@
+---
+import { render } from "astro:content";
+import AutorixDocsLayout from "../../../layouts/AutorixDocsLayout.astro";
+import { getTranslations } from "../../../libs/getTranslations";
+import {
+  SITE_LOCALES,
+  SECTION_LABELS,
+  getAutorixDocsForLocale,
+  getCanonicalSlug,
+  getPrevNext,
+} from "../../../libs/autorixDocs";
+
+export function getStaticPaths() {
+  return SITE_LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang!;
+const t = getTranslations(lang);
+const { docsLocale, entries, navItems, groups } =
+  await getAutorixDocsForLocale(lang);
+
+const overviewEntry = entries.find(
+  (entry) => getCanonicalSlug(entry.id) === "overview"
+);
+if (!overviewEntry) {
+  throw new Error(`Missing Autorix overview markdown for locale "${docsLocale}"`);
+}
+
+const { Content, headings } = await render(overviewEntry);
+const { prev, next } = getPrevNext(navItems, "overview");
+const sectionLabel = SECTION_LABELS[docsLocale][overviewEntry.data.section];
+const engineCards = t.pages.autorix.engineCards;
+---
+
+<AutorixDocsLayout
+  lang={lang}
+  t={t}
+  title={overviewEntry.data.title}
+  description={overviewEntry.data.description}
+  sectionLabel={sectionLabel}
+  currentSlug="overview"
+  path="autorix"
+  groups={groups}
+  headings={headings}
+  prev={prev}
+  next={next}
+  badge={overviewEntry.data.badge}
+  isOverview={true}
+>
+  <section
+    slot="before-content"
+    aria-label={t.pages.autorix.docsUi.enginesGridLabel}
+    class="mb-9"
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      {
+        engineCards.map((card: any) => (
+          <a
+            href={`/${lang}/autorix/${card.slug}`}
+            class="group flex flex-col justify-between p-4 rounded-xl border border-gray-200 dark:border-[#232936] bg-gray-50/70 dark:bg-[#131720] hover:border-[#59B0C8] hover:shadow-md transition-all"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="font-semibold text-sm text-gray-950 dark:text-white group-hover:text-[#0e6b85] dark:group-hover:text-[#7AD4EC] transition-colors">
+                  {card.name}
+                </span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#59B0C8]/12 text-[#0e6b85] dark:text-[#7AD4EC]">
+                  {card.tag}
+                </span>
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                {card.summary}
+              </p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-gray-200/70 dark:border-[#1f2633] flex items-center justify-between text-[11px] font-mono text-gray-500 dark:text-gray-400">
+              <span>{card.ports}</span>
+              <span class="text-[#0e6b85] dark:text-[#7AD4EC] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">
+                →
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <Content />
+</AutorixDocsLayout>

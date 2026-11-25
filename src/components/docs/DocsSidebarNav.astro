@@ -1,0 +1,48 @@
+---
+import type { NavGroup } from "../../libs/autorixDocs";
+
+interface Props {
+  groups: NavGroup[];
+  currentSlug: string;
+}
+
+const { groups, currentSlug } = Astro.props;
+---
+
+<div class="space-y-3">
+  {
+    groups.map((group) => (
+      <details class="docs-nav-group" open>
+        <summary class="px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#89B4C2] hover:text-gray-900 dark:hover:text-white rounded-md transition-colors">
+          <span>{group.label}</span>
+        </summary>
+        <ul class="mt-1 space-y-0.5 pl-2 border-l border-gray-200 dark:border-[#1f2633] ml-2.5">
+          {group.items.map((item) => {
+            const isActive = item.slug === currentSlug;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  class:list={[
+                    "flex items-center justify-between gap-2 px-3 py-1.5 rounded-md text-sm transition-colors min-h-[34px]",
+                    isActive
+                      ? "bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC] font-semibold border-l-2 border-[#59B0C8] -ml-[9px] pl-[19px]"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#181D27] hover:text-gray-950 dark:hover:text-white",
+                  ]}
+                >
+                  <span class="truncate">{item.navTitle}</span>
+                  {item.badge && (
+                    <span class="shrink-0 text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC]">
+                      {item.badge}
+                    </span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </details>
+    ))
+  }
+</div>
