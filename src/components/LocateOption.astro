@@ -1,60 +1,259 @@
 ---
 import { Icon } from "astro-icon/components";
 
+interface Props {
+  currentLang: string;
+}
+
 const { currentLang } = Astro.props;
 
 const languages = [
-  { code: "en-us", label: "English (US)" },
-  { code: "es-mx", label: "Español (MX)" },
-  { code: "es-es", label: "Español (ES)" },
-];
+  { code: "en-us", short: "EN", label: "English (US)" },
+  { code: "es-mx", short: "MX", label: "Español (MX)" },
+  { code: "es-es", short: "ES", label: "Español (ES)" },
+] as const;
+
+const supportedCodes: readonly string[] = languages.map((l) => l.code);
+const activeLanguage =
+  languages.find((l) => l.code === currentLang) || languages[0];
+
+const rawSegments = Astro.url.pathname.split("/").filter(Boolean);
+const pathRemainder =
+  rawSegments[0] === "404"
+    ? []
+    : supportedCodes.includes(rawSegments[0])
+      ? rawSegments.slice(1)
+      : rawSegments;
+
+const buildLocaleHref = (code: string) =>
+  pathRemainder.length > 0 ? `/${code}/${pathRemainder.join("/")}` : `/${code}/`;
+
+const triggerAriaLabel = currentLang.startsWith("es")
+  ? `Idioma: ${activeLanguage.label}`
+  : `Language: ${activeLanguage.label}`;
 ---
 
-<div
-  class="flex items-center gap-2 bg-white dark:bg-[#1c1f26] px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700"
->
-  <span
-    class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+<div class="inline-flex items-center" data-lang-switcher>
+  <button
+    id="lang-menu-trigger"
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-label={triggerAriaLabel}
+    commandfor="lang-menu-popover"
+    command="toggle-popover"
+    class="lang-menu-trigger group inline-flex items-center gap-2 bg-white dark:bg-[#1c1f26] pl-1.5 pr-3 py-1 rounded-full border border-gray-300 dark:border-gray-700 hover:border-[#59B0C8] dark:hover:border-[#59B0C8] text-gray-900 dark:text-white text-sm font-medium transition-colors cursor-pointer min-h-[42px]"
   >
-    <Icon name="world" class="w-5 h-5" />
-  </span>
-  <div class="relative">
-    <select
-      id="language-select"
-      class="appearance-none bg-transparent text-black dark:text-white focus:outline-none text-sm pr-6"
+    <span
+      class="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 dark:bg-[#2A313D] text-gray-800 dark:text-white shrink-0"
+      aria-hidden="true"
+    >
+      <Icon name="world" class="w-4 h-4" />
+    </span>
+    <span class="whitespace-nowrap">{activeLanguage.label}</span>
+    <svg
+      class="lang-menu-chevron w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 transition-transform duration-150"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 8l4 4 4-4"></path>
+    </svg>
+  </button>
+
+  <div
+    id="lang-menu-popover"
+    popover="auto"
+    class="lang-menu-popover min-w-[12.5rem] rounded-xl bg-white dark:bg-[#1C1F26] border border-gray-200 dark:border-[#2a3140] shadow-xl p-1.5 text-gray-900 dark:text-white"
+  >
+    <div
+      focusgroup="menu nomemory"
+      aria-labelledby="lang-menu-trigger"
+      class="lang-menu-group flex flex-col gap-0.5"
     >
       {
-        languages.map((lang) => (
-          <option value={lang.code} selected={lang.code === currentLang}>
-            {lang.label}
-          </option>
-        ))
+        languages.map((lang) => {
+          const isCurrent = lang.code === activeLanguage.code;
+          return (
+            <a
+              href={buildLocaleHref(lang.code)}
+              hreflang={lang.code}
+              lang={lang.code}
+              aria-current={isCurrent ? "true" : undefined}
+              data-lang-item
+              class:list={[
+                "lang-menu-item flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors",
+                isCurrent
+                  ? "bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC] font-semibold"
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#2A313D] hover:text-gray-950 dark:hover:text-white",
+              ]}
+            >
+              <span
+                class="w-6 text-center text-[11px] font-mono font-semibold px-1 py-0.5 rounded bg-gray-100 dark:bg-[#262d3b] text-gray-600 dark:text-[#9ec7d4] shrink-0"
+                aria-hidden="true"
+              >
+                {lang.short}
+              </span>
+              <span class="flex-1 whitespace-nowrap">{lang.label}</span>
+              <span
+                class="w-4 text-right text-xs font-bold text-[#0e6b85] dark:text-[#7AD4EC] shrink-0"
+                aria-hidden="true"
+              >
+                {isCurrent ? "✓" : ""}
+              </span>
+            </a>
+          );
+        })
       }
-    </select>
-    <span
-      class="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"
-    >
-      ▼
-    </span>
+    </div>
   </div>
 </div>
 
 <script>
-  const SUPPORTED = ["en-us", "es-mx", "es-es"];
+  const trigger = document.getElementById(
+    "lang-menu-trigger"
+  ) as HTMLButtonElement | null;
+  const popover = document.getElementById(
+    "lang-menu-popover"
+  ) as HTMLElement | null;
+  const group = popover?.querySelector<HTMLElement>('[focusgroup~="menu"]');
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const select = document.getElementById("language-select");
-    if (select) {
-      select.addEventListener("change", (event) => {
-        const target = (event.target as HTMLSelectElement).value;
-        const segments = window.location.pathname.split("/").filter(Boolean);
-        const rest = SUPPORTED.includes(segments[0])
-          ? segments.slice(1)
-          : segments;
-        const next =
-          `/${target}` + (rest.length ? `/${rest.join("/")}` : "/");
-        window.location.href = next;
+  if (trigger && popover && group) {
+    const getItems = () =>
+      Array.from(group.querySelectorAll<HTMLAnchorElement>("[data-lang-item]"));
+
+    const isOpen = () => popover.matches(":popover-open");
+    let openViaPointer = false;
+    let shouldEnterOnOpen = false;
+
+    const positionFallback = () => {
+      if (CSS.supports("position-area: block-end")) return;
+      const rect = trigger.getBoundingClientRect();
+      const popWidth = popover.offsetWidth || 200;
+      const popHeight = popover.offsetHeight || 140;
+      const margin = 8;
+
+      let left = rect.right - popWidth;
+      left = Math.max(margin, Math.min(left, window.innerWidth - popWidth - margin));
+
+      let top = rect.bottom + margin;
+      if (top + popHeight > window.innerHeight - margin) {
+        top = Math.max(margin, rect.top - popHeight - margin);
+      }
+
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+    };
+
+    // Fallback for browsers without native Invoker Commands (commandfor / command)
+    if (!("commandForElement" in HTMLButtonElement.prototype)) {
+      trigger.addEventListener("click", () => {
+        if (typeof popover.togglePopover === "function") {
+          try {
+            (popover as any).togglePopover({ source: trigger });
+          } catch {
+            popover.togglePopover();
+          }
+        }
       });
     }
-  });
+
+    // Fallback for browsers without native focusgroup
+    if (!("focusGroup" in HTMLElement.prototype)) {
+      group.setAttribute("role", "menu");
+      getItems().forEach((item) => item.setAttribute("role", "menuitem"));
+      group.addEventListener(
+        "keydown",
+        (event) => {
+          if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+            return;
+          }
+          const items = getItems();
+          const current = items.indexOf(
+            document.activeElement as HTMLAnchorElement
+          );
+          if (current < 0) return;
+          const next =
+            event.key === "Home"
+              ? 0
+              : event.key === "End"
+                ? items.length - 1
+                : (current + (event.key === "ArrowUp" ? -1 : 1) + items.length) %
+                  items.length;
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          items[next]?.focus({ preventScroll: true });
+        },
+        true
+      );
+    }
+
+    trigger.addEventListener("pointerdown", () => {
+      openViaPointer = true;
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        openViaPointer = false;
+        if (!isOpen()) {
+          shouldEnterOnOpen = true;
+          trigger.click();
+        } else {
+          getItems()[0]?.focus({ preventScroll: true });
+        }
+      } else if (event.key === "Enter" || event.key === " ") {
+        openViaPointer = false;
+        shouldEnterOnOpen = true;
+      }
+    });
+
+    popover.addEventListener("toggle", (event) => {
+      const toggleEvent = event as ToggleEvent;
+      const opened = toggleEvent.newState === "open";
+      trigger.setAttribute("aria-expanded", String(opened));
+
+      if (opened) {
+        positionFallback();
+        if (shouldEnterOnOpen && !openViaPointer) {
+          getItems()[0]?.focus({ preventScroll: true });
+        } else if (openViaPointer) {
+          trigger.focus({ preventScroll: true });
+        }
+        shouldEnterOnOpen = false;
+        openViaPointer = false;
+      }
+    });
+
+    // Keep hover and keyboard focus synchronized
+    group.addEventListener("pointermove", (event) => {
+      const item = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>(
+        "[data-lang-item]"
+      );
+      if (item && document.activeElement !== item) {
+        item.focus({ preventScroll: true });
+      }
+    });
+
+    // Close on Tab out of menu system
+    document.addEventListener("focusin", (event) => {
+      if (!isOpen()) return;
+      const target = event.target as Node | null;
+      if (target && !popover.contains(target) && target !== trigger) {
+        popover.hidePopover();
+      }
+    });
+
+    window.addEventListener(
+      "resize",
+      () => {
+        if (isOpen()) positionFallback();
+      },
+      { passive: true }
+    );
+  }
 </script>

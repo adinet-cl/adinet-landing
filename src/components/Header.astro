@@ -11,7 +11,7 @@ const { lang, t, src, alt } = Astro.props;
   class="fixed top-0 inset-x-0 z-50 bg-white/70 dark:bg-[#0F1117]/70 border-b border-gray-200 dark:border-[#1C1F26] backdrop-blur-md transition-colors"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-    <div class="w-full flex items-center justify-between">
+    <div class="w-full flex flex-wrap items-center justify-between gap-y-3">
       <Logo lang={lang} src={src} alt={alt} />
 
       <button
@@ -52,10 +52,10 @@ const { lang, t, src, alt } = Astro.props;
 
       <div
         id="mobile-menu"
-        class="hidden sm:flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 ml-auto"
+        class="hidden sm:flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 w-full sm:w-auto sm:ml-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-200 dark:border-[#1C1F26]"
       >
         <Nav lang={lang} t={t} />
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4">
           <Location currentLang={lang} />
           <SwitchTheme />
         </div>

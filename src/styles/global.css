@@ -20,10 +20,63 @@
   white-space: nowrap !important;
 }
 
-/* Global focus indicator for docs interactive controls */
-.docs-shell :where(a:any-link, button, summary, input, [tabindex="0"]):focus-visible {
+/* Global focus indicator for docs interactive controls and language menu */
+.docs-shell :where(a:any-link, button, summary, input, [tabindex="0"]):focus-visible,
+.lang-menu-trigger:focus-visible,
+.lang-menu-item:focus-visible {
   outline: 2px solid #59b0c8;
   outline-offset: 2px;
+}
+
+/* ============================================================================
+   Language Selector Popover Menu (per modern-web-guidance menu & viewport-aware-dropdowns)
+   ============================================================================ */
+.lang-menu-trigger[aria-expanded="true"] {
+  border-color: #59b0c8;
+}
+
+.lang-menu-trigger[aria-expanded="true"] .lang-menu-chevron {
+  transform: rotate(180deg);
+}
+
+@supports (position-area: block-end) {
+  .lang-menu-popover {
+    position-area: block-end span-inline-start;
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    inset: auto;
+    margin: 0.5rem 0 0 0;
+  }
+}
+
+@supports not (position-area: block-end) {
+  .lang-menu-popover {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports selector(:popover-open) {
+    .lang-menu-popover {
+      opacity: 0;
+      translate: 0 -0.25rem;
+      transition: opacity, translate, display, overlay;
+      transition-duration: 0.14s;
+      transition-behavior: allow-discrete;
+    }
+
+    .lang-menu-popover:popover-open {
+      opacity: 1;
+      translate: 0 0;
+      transition-duration: 0.1s;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
+    }
+  }
 }
 
 /* Native <dialog> modal scroll containment (per modern-web-guidance dialog) */
