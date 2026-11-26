@@ -1,5 +1,5 @@
 ---
-import type { NavGroup } from "../../libs/autorixDocs";
+import type { NavGroup } from "../../libs/docsShared";
 import DocsSidebarNav from "./DocsSidebarNav.astro";
 
 interface Props {
@@ -8,15 +8,22 @@ interface Props {
   drawerLabel: string;
   closeLabel: string;
   versionBadge: string;
+  brandDocsTitle?: string;
 }
 
-const { groups, currentSlug, drawerLabel, closeLabel, versionBadge } =
-  Astro.props;
+const {
+  groups,
+  currentSlug,
+  drawerLabel,
+  closeLabel,
+  versionBadge,
+  brandDocsTitle = "Autorix Docs",
+} = Astro.props;
 ---
 
 <dialog
   class="docs-drawer"
-  id="autorix-docs-drawer"
+  id="docs-drawer"
   aria-label={drawerLabel}
 >
   <div class="docs-drawer-scroller">
@@ -26,13 +33,13 @@ const { groups, currentSlug, drawerLabel, closeLabel, versionBadge } =
     >
       <div class="flex items-center justify-between gap-3 px-4 py-3.5 border-b border-gray-200 dark:border-[#1f2633]">
         <div class="flex items-center gap-2">
-          <span class="font-bold text-base tracking-tight">Autorix Docs</span>
+          <span class="font-bold text-base tracking-tight">{brandDocsTitle}</span>
           <span class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC]">
             {versionBadge}
           </span>
         </div>
         <button
-          id="autorix-drawer-close"
+          id="docs-drawer-close"
           type="button"
           autofocus
           aria-label={closeLabel}
@@ -59,11 +66,9 @@ const { groups, currentSlug, drawerLabel, closeLabel, versionBadge } =
 </dialog>
 
 <script>
-  const drawer = document.getElementById(
-    "autorix-docs-drawer"
-  ) as HTMLDialogElement | null;
-  const openBtn = document.getElementById("autorix-drawer-open");
-  const closeBtn = document.getElementById("autorix-drawer-close");
+  const drawer = document.getElementById("docs-drawer") as HTMLDialogElement | null;
+  const openBtn = document.getElementById("docs-drawer-open");
+  const closeBtn = document.getElementById("docs-drawer-close");
   const scroller = drawer?.querySelector<HTMLElement>(".docs-drawer-scroller");
   const sheet = drawer?.querySelector<HTMLElement>(".docs-drawer-sheet");
 

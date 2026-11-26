@@ -12,9 +12,8 @@
           {
             "key": "indigodb",
             "title": "IndigoDB",
-            "description": "ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
-            "icon": "database",
-            "href": "https://github.com/adinet-cl/indigodb"
+            "description": "Suite PostgreSQL schema-first: ORM .indigo, migraciones con shadow DB, tiempo real WAL y Studio.",
+            "icon": "database"
           },
           {
             "key": "autorix",
@@ -64,11 +63,11 @@
           {
             "key": "indigodb",
             "title": "IndigoDB",
-            "description": "ORM en tiempo real para Node.js. Potenciado por triggers de PostgreSQL y change streams de MongoDB.",
+            "description": "Suite de base de datos PostgreSQL schema-first con compilador Rust/WASM .indigo y 11 paquetes npm @indigodb/*.",
             "features": [
-              "Sincronización en tiempo real",
-              "PostgreSQL y MongoDB",
-              "Experiencia tipo Prisma"
+              "ORM Tipado, RLS y Migraciones Shadow",
+              "WAL Tiempo Real SSE, Canales y Hooks React",
+              "Diagrama ER Visual, Datos y Consola SQL"
             ],
             "icon": "database"
           },
@@ -112,10 +111,101 @@
     },
     "indigodb": {
       "title": "IndigoDB",
-      "tagline": "ORM en tiempo real para Node.js",
-      "description": "IndigoDB es un ORM en tiempo real para Node.js impulsado por triggers de PostgreSQL y change streams de MongoDB. Combina una experiencia de desarrollo tipo Prisma con sincronización de datos en tiempo real.",
-      "metaDescription": "IndigoDB — ORM en tiempo real para Node.js con PostgreSQL y MongoDB.",
-      "cta": "Ver en GitHub"
+      "tagline": "Toolkit PostgreSQL Schema-First, ORM y Studio",
+      "description": "Un único lenguaje de esquema .indigo impulsa un cliente ORM tipado en TypeScript, migraciones PostgreSQL reproducidas en shadow DB, tiempo real WAL + hooks de React y un Studio visual a través de 11 paquetes npm en @indigodb/*.",
+      "metaDescription": "Documentación de IndigoDB — ORM PostgreSQL schema-first, migraciones versionadas, tiempo real WAL SSE/canales, hooks React y Studio publicados bajo @indigodb en npm.",
+      "cta": "Ver en GitHub",
+      "docsUi": {
+        "skipToContent": "Saltar al contenido de la documentación",
+        "sidebarLabel": "Documentación de IndigoDB",
+        "breadcrumbLabel": "Ruta de navegación",
+        "paginationLabel": "Paginación de documentación",
+        "onThisPage": "En esta página",
+        "menuButton": "Menú docs",
+        "searchButton": "Buscar en docs...",
+        "searchTitle": "Buscar en la documentación de IndigoDB",
+        "searchPlaceholder": "Buscar sintaxis .indigo, paquetes @indigodb/*, CLI, tiempo real...",
+        "searchEmpty": "No se encontraron páginas que coincidan.",
+        "searchHint": "Escribe términos como @indigodb/client, migrate, realtime, @@allow o studio.",
+        "resultsSingular": "resultado",
+        "resultsPlural": "resultados",
+        "closeLabel": "Cerrar",
+        "previousPage": "Anterior",
+        "nextPage": "Siguiente",
+        "copyCode": "Copiar",
+        "copiedCode": "Copiado",
+        "quickStartCta": "Inicio Rápido (5 min)",
+        "architectureCta": "Arquitectura Maestra",
+        "viewGithub": "Ver en GitHub",
+        "viewNpm": "npm (@indigodb)",
+        "reportIssue": "Reportar un problema",
+        "packagesGridLabel": "Paquetes y módulos principales de IndigoDB"
+      },
+      "packageCards": [
+        {
+          "name": "@indigodb/cli",
+          "tag": "Binario CLI",
+          "summary": "CLI unificado indigodb para init, db push/pull, migrate dev/deploy, generate, realtime y studio.",
+          "meta": "v0.1.1 · npx indigodb",
+          "slug": "cli/reference"
+        },
+        {
+          "name": "@indigodb/client",
+          "tag": "ORM + ./realtime",
+          "summary": "Delegados PostgreSQL tipados estilo Prisma, transacciones, RLS $auth, adaptadores y SDK navegador.",
+          "meta": "v0.1.1 · Servidor y Navegador",
+          "slug": "orm/queries-and-mutations"
+        },
+        {
+          "name": "@indigodb/migrator",
+          "tag": "Migraciones",
+          "summary": "db push idempotente, diffs sobre shadow PGlite, historial SHA-256 e introspección db pull.",
+          "meta": "v0.1.1 · DDL PostgreSQL",
+          "slug": "migrations/overview"
+        },
+        {
+          "name": "@indigodb/realtime",
+          "tag": "WAL pgoutput",
+          "summary": "Notificaciones SSE de replicación lógica, /log con handle HMAC, canales Presence/Broadcast y métricas.",
+          "meta": "v0.1.1 · ./protocol",
+          "slug": "realtime/engine-and-wal"
+        },
+        {
+          "name": "@indigodb/react",
+          "tag": "Hooks React 18+",
+          "summary": "Hooks useLiveTable y useChannel seguros en navegador sobre useSyncExternalStore y SSR.",
+          "meta": "v0.1.1 · Browser-safe",
+          "slug": "realtime/browser-and-react"
+        },
+        {
+          "name": "@indigodb/studio",
+          "tag": "SPA Visual",
+          "summary": "Diagrama ER React Flow + editor Monaco .indigo, explorador de datos, consola SQL y docs.",
+          "meta": "v0.1.1 · :5555",
+          "slug": "studio/workspace-and-security"
+        },
+        {
+          "name": "@indigodb/core",
+          "tag": "IR y Printer",
+          "summary": "IR central ResolvedSchema, validate(), resolve(), helpers de atributos y printSchema() sin pérdida.",
+          "meta": "v0.1.1 · Node y Navegador",
+          "slug": "packages/compiler-and-core"
+        },
+        {
+          "name": "@indigodb/compiler",
+          "tag": "Rust → WASM",
+          "summary": "Lexer, parser, validador y spans UTF-16 en WebAssembly junto a @indigodb/parser y ast.",
+          "meta": "v0.1.1 · Node y Navegador",
+          "slug": "packages/compiler-and-core"
+        },
+        {
+          "name": "@indigodb/generator",
+          "tag": "Codegen",
+          "summary": "Emite tipos Row/Input/Where/Unique y delegados indigo.ts desde ResolvedSchema.",
+          "meta": "v0.1.1 · indigo.ts",
+          "slug": "packages/codegen-and-migrator"
+        }
+      ]
     },
     "autorix": {
       "title": "Autorix",
@@ -245,7 +335,7 @@
     },
     "sections": {
       "product": [
-        { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
+        { "label": "IndigoDB", "key": "indigodb" },
         { "label": "Autorix", "key": "autorix" },
         { "label": "SaaS Core", "comingSoon": true },
         { "label": "Kit de herramientas open source", "comingSoon": true }

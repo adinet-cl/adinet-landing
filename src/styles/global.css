@@ -533,8 +533,9 @@ dialog::backdrop {
 /* Responsive Data Tables (per modern-web-guidance responsive-table) */
 .docs-table-wrapper {
   overflow: auto;
+  scrollbar-gutter: stable;
   max-inline-size: 100%;
-  max-block-size: min(560px, 75vh);
+  max-block-size: min(760px, 82vh);
   container-type: inline-size;
   margin: 1.35rem 0;
   border: 1px solid #e2e8f0;

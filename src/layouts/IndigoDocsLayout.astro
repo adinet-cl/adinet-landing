@@ -1,0 +1,73 @@
+---
+import DocsShellLayout from "./DocsShellLayout.astro";
+import type { Heading, NavGroup, NavItem } from "../libs/docsShared";
+
+interface Props {
+  lang: string;
+  t: any;
+  title: string;
+  description: string;
+  sectionLabel: string;
+  currentSlug: string;
+  path: string;
+  groups: NavGroup[];
+  headings: Heading[];
+  prev?: NavItem;
+  next?: NavItem;
+  badge?: string;
+  runtime?: string;
+  npmPackages?: string[];
+  isOverview?: boolean;
+}
+
+const {
+  lang,
+  t,
+  title,
+  description,
+  sectionLabel,
+  currentSlug,
+  path,
+  groups,
+  headings,
+  prev,
+  next,
+  badge,
+  runtime,
+  npmPackages = [],
+  isOverview = false,
+} = Astro.props;
+
+const ui = t.pages.indigodb.docsUi;
+const metaChips = [runtime].filter((chip): chip is string => Boolean(chip));
+---
+
+<DocsShellLayout
+  lang={lang}
+  t={t}
+  basePath="indigodb"
+  brandName="IndigoDB"
+  brandDocsTitle="IndigoDB Docs"
+  versionBadge="v0.1.1"
+  githubRepo="https://github.com/chechooxd/indigo"
+  npmOrgUrl="https://www.npmjs.com/org/indigodb"
+  quickStartPath="getting-started"
+  architecturePath="architecture"
+  ui={ui}
+  title={title}
+  description={description}
+  sectionLabel={sectionLabel}
+  currentSlug={currentSlug}
+  path={path}
+  groups={groups}
+  headings={headings}
+  prev={prev}
+  next={next}
+  badge={badge}
+  metaChips={metaChips}
+  npmPackages={npmPackages}
+  isOverview={isOverview}
+>
+  <slot name="before-content" slot="before-content" />
+  <slot />
+</DocsShellLayout>

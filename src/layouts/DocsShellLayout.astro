@@ -1,0 +1,430 @@
+---
+import Layout from "./Layout.astro";
+import DocsSidebarNav from "../components/docs/DocsSidebarNav.astro";
+import DocsToc from "../components/docs/DocsToc.astro";
+import DocsSearchModal from "../components/docs/DocsSearchModal.astro";
+import DocsMobileDrawer from "../components/docs/DocsMobileDrawer.astro";
+import type { Heading, NavGroup, NavItem } from "../libs/docsShared";
+
+interface Props {
+  lang: string;
+  t: any;
+  basePath: string;
+  brandName: string;
+  brandDocsTitle: string;
+  versionBadge: string;
+  githubRepo: string;
+  npmOrgUrl?: string;
+  quickStartPath: string;
+  architecturePath: string;
+  ui: any;
+  title: string;
+  description: string;
+  sectionLabel: string;
+  currentSlug: string;
+  path: string;
+  groups: NavGroup[];
+  headings: Heading[];
+  prev?: NavItem;
+  next?: NavItem;
+  badge?: string;
+  metaChips?: string[];
+  npmPackages?: string[];
+  isOverview?: boolean;
+}
+
+const {
+  lang,
+  t,
+  basePath,
+  brandName,
+  brandDocsTitle,
+  versionBadge,
+  githubRepo,
+  npmOrgUrl,
+  quickStartPath,
+  architecturePath,
+  ui,
+  title,
+  description,
+  sectionLabel,
+  currentSlug,
+  path,
+  groups,
+  headings,
+  prev,
+  next,
+  badge,
+  metaChips = [],
+  npmPackages = [],
+  isOverview = false,
+} = Astro.props;
+
+const tocItems = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+// Rewrite canonical /<basePath> links inside rendered Markdown to /${lang}/<basePath> at static build time
+const rawBodyHtml = await Astro.slots.render("default");
+const localizedBodyHtml = rawBodyHtml.replaceAll(
+  `href="/${basePath}`,
+  `href="/${lang}/${basePath}`
+);
+---
+
+<Layout
+  lang={lang}
+  t={t}
+  title={`${title} | ${brandDocsTitle}`}
+  description={description}
+  path={path}
+>
+  <div class="docs-shell pt-[73px] bg-white dark:bg-[#0F1117] text-gray-900 dark:text-white min-h-screen transition-colors">
+    <a
+      href="#docs-article-title"
+      class="visually-hidden fixed top-20 left-4 z-50 px-4 py-2 rounded-md bg-[#59B0C8] text-black font-semibold text-sm shadow-lg"
+    >
+      {ui.skipToContent}
+    </a>
+
+    <!-- Mobile / Tablet Docs Toolbar -->
+    <div class="lg:hidden sticky top-[73px] z-30 bg-white/90 dark:bg-[#0F1117]/90 backdrop-blur-md border-b border-gray-200 dark:border-[#1f2633] px-4 py-2.5">
+      <div class="flex items-center justify-between gap-3">
+        <button
+          id="docs-drawer-open"
+          type="button"
+          aria-expanded="false"
+          aria-controls="docs-drawer"
+          class="inline-flex items-center gap-2 min-h-[36px] px-3 py-1.5 rounded-md border border-gray-200 dark:border-[#262d3d] text-sm font-medium text-gray-800 dark:text-gray-200 hover:border-[#59B0C8] transition-colors cursor-pointer"
+        >
+          <svg
+            class="w-4 h-4 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span>{ui.menuButton}</span>
+        </button>
+
+        <button
+          type="button"
+          data-open-docs-search
+          aria-label={ui.searchTitle}
+          class="inline-flex items-center gap-2 min-h-[36px] px-3 py-1.5 rounded-md border border-gray-200 dark:border-[#262d3d] text-sm text-gray-600 dark:text-gray-300 hover:border-[#59B0C8] transition-colors cursor-pointer"
+        >
+          <svg
+            class="w-4 h-4 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <span class="hidden sm:inline">{ui.searchButton}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3-Column Documentation Layout -->
+    <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex gap-8">
+      <!-- Desktop Left Sidebar -->
+      <aside class="hidden lg:block w-68 shrink-0 border-r border-gray-200 dark:border-[#1C1F26]">
+        <div class="sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto py-6 pr-5">
+          <div class="flex items-center justify-between mb-4 px-1">
+            <a
+              href={`/${lang}/${basePath}`}
+              class="flex items-center gap-2 font-bold text-base text-gray-950 dark:text-white hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors"
+            >
+              <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#59B0C8]" aria-hidden="true"></span>
+              <span>{brandDocsTitle}</span>
+            </a>
+            <span class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC]">
+              {versionBadge}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            data-open-docs-search
+            class="w-full mb-5 flex items-center justify-between gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-[#252c3b] bg-gray-50 dark:bg-[#141822] text-sm text-gray-500 dark:text-gray-400 hover:border-[#59B0C8] hover:text-gray-800 dark:hover:text-gray-200 transition-colors cursor-pointer"
+          >
+            <span class="flex items-center gap-2 truncate">
+              <svg
+                class="w-4 h-4 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <span class="truncate">{ui.searchButton}</span>
+            </span>
+            <kbd class="shrink-0 text-[11px] font-mono px-1.5 py-0.5 rounded border border-gray-200 dark:border-[#2c3446] bg-white dark:bg-[#0F1117] text-gray-500 dark:text-gray-400">
+              ⌘K
+            </kbd>
+          </button>
+
+          <nav aria-label={ui.sidebarLabel}>
+            <DocsSidebarNav groups={groups} currentSlug={currentSlug} />
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Documentation Article -->
+      <div class="min-w-0 flex-1 py-8 lg:py-10 max-w-4xl">
+        <!-- Breadcrumb -->
+        <nav aria-label={ui.breadcrumbLabel} class="mb-4">
+          <ol class="flex flex-wrap items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
+            <li>
+              <a
+                href={`/${lang}/${basePath}`}
+                class="hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors"
+              >
+                {brandName}
+              </a>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li class="text-[#0e6b85] dark:text-[#7AD4EC]">{sectionLabel}</li>
+          </ol>
+        </nav>
+
+        <!-- Document Header -->
+        <header class="pb-6 mb-7 border-b border-gray-200 dark:border-[#1f2633]">
+          {
+            (badge || metaChips.length > 0 || npmPackages.length > 0) && (
+              <div class="flex flex-wrap items-center gap-2 mb-3">
+                {badge && (
+                  <span class="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#59B0C8]/15 text-[#0e6b85] dark:text-[#7AD4EC] border border-[#59B0C8]/30">
+                    {badge}
+                  </span>
+                )}
+                {metaChips.map((chip) => (
+                  <span class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-[#171c26] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#262d3d]">
+                    {chip}
+                  </span>
+                ))}
+                {npmPackages.map((pkg) => (
+                  <a
+                    href={`https://www.npmjs.com/package/${pkg}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-[#171c26] text-gray-800 dark:text-[#9bdcf0] border border-gray-200 dark:border-[#262d3d] hover:border-[#59B0C8] transition-colors"
+                  >
+                    <span>npm: {pkg}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            )
+          }
+
+          <h1
+            id="docs-article-title"
+            tabindex="-1"
+            class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 dark:text-white leading-tight mb-3"
+          >
+            {title}
+          </h1>
+          <p class="text-base sm:text-lg text-gray-600 dark:text-[#B0D3D9] leading-relaxed">
+            {description}
+          </p>
+
+          {
+            isOverview && (
+              <div class="mt-6 flex flex-wrap items-center gap-2.5">
+                <a
+                  href={`/${lang}/${basePath}/${quickStartPath}`}
+                  class="inline-flex items-center gap-2 bg-[#59B0C8] text-black px-4 py-2.5 font-semibold text-sm rounded-lg hover:bg-secondary transition-colors"
+                >
+                  <span>{ui.quickStartCta}</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a
+                  href={`/${lang}/${basePath}/${architecturePath}`}
+                  class="inline-flex items-center gap-2 px-4 py-2.5 font-semibold text-sm rounded-lg border border-gray-300 dark:border-[#2d3648] text-gray-900 dark:text-white hover:border-[#59B0C8] transition-colors"
+                >
+                  {ui.architectureCta}
+                </a>
+                <a
+                  href={githubRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 font-medium text-sm rounded-lg text-gray-700 dark:text-gray-300 hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors"
+                >
+                  <span>{ui.viewGithub}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                {npmOrgUrl && ui.viewNpm && (
+                  <a
+                    href={npmOrgUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 px-3 py-2 font-medium text-sm rounded-lg text-gray-700 dark:text-gray-300 hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC] transition-colors"
+                  >
+                    <span>{ui.viewNpm}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </div>
+            )
+          }
+        </header>
+
+        <!-- Optional Overview Slot (Cards grid on overview page) -->
+        <slot name="before-content" />
+
+        <!-- Mobile / Tablet On-This-Page Disclosure -->
+        {
+          tocItems.length > 0 && (
+            <details class="docs-nav-group xl:hidden mb-7 rounded-lg border border-gray-200 dark:border-[#232936] bg-gray-50 dark:bg-[#131720] px-4 py-3">
+              <summary class="text-xs font-semibold uppercase tracking-wider text-gray-700 dark:text-[#89B4C2]">
+                <span>{ui.onThisPage}</span>
+              </summary>
+              <ul class="mt-3 space-y-1.5 text-sm pl-2 border-l border-gray-200 dark:border-[#262d3d]">
+                {tocItems.map((heading) => (
+                  <li class={heading.depth === 3 ? "pl-3 text-xs" : ""}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="block py-0.5 text-gray-600 dark:text-gray-300 hover:text-[#1e7f9b] dark:hover:text-[#7AD4EC]"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
+
+        <!-- Rendered Markdown Body -->
+        <article
+          class="docs-prose"
+          data-copy-label={ui.copyCode}
+          data-copied-label={ui.copiedCode}
+          set:html={localizedBodyHtml}
+        />
+
+        <!-- Previous / Next Navigation -->
+        {
+          (prev || next) && (
+            <nav
+              aria-label={ui.paginationLabel}
+              class="mt-12 pt-6 border-t border-gray-200 dark:border-[#1f2633] grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
+              {prev ? (
+                <a
+                  href={prev.href}
+                  class="group flex flex-col p-4 rounded-xl border border-gray-200 dark:border-[#232936] hover:border-[#59B0C8] bg-gray-50/60 dark:bg-[#131720] transition-colors"
+                >
+                  <span class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+                    ← {ui.previousPage}
+                  </span>
+                  <span class="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-[#1e7f9b] dark:group-hover:text-[#7AD4EC] transition-colors">
+                    {prev.navTitle}
+                  </span>
+                </a>
+              ) : (
+                <div aria-hidden="true" />
+              )}
+
+              {next && (
+                <a
+                  href={next.href}
+                  class="group flex flex-col items-end text-right p-4 rounded-xl border border-gray-200 dark:border-[#232936] hover:border-[#59B0C8] bg-gray-50/60 dark:bg-[#131720] transition-colors"
+                >
+                  <span class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+                    {ui.nextPage} →
+                  </span>
+                  <span class="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-[#1e7f9b] dark:group-hover:text-[#7AD4EC] transition-colors">
+                    {next.navTitle}
+                  </span>
+                </a>
+              )}
+            </nav>
+          )
+        }
+      </div>
+
+      <!-- Desktop Right On-This-Page TOC -->
+      <DocsToc
+        headings={headings}
+        label={ui.onThisPage}
+        githubUrl={githubRepo}
+        githubLabel={ui.viewGithub}
+        issuesLabel={ui.reportIssue}
+        npmUrl={npmOrgUrl}
+        npmLabel={ui.viewNpm}
+      />
+    </div>
+
+    <!-- Centralized polite live region for copy feedback -->
+    <div id="docs-live-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Mobile Navigation Drawer (<dialog>) -->
+    <DocsMobileDrawer
+      groups={groups}
+      currentSlug={currentSlug}
+      drawerLabel={ui.sidebarLabel}
+      closeLabel={ui.closeLabel}
+      versionBadge={versionBadge}
+      brandDocsTitle={brandDocsTitle}
+    />
+
+    <!-- Search Modal (<dialog closedby="any">) -->
+    <DocsSearchModal indexUrl={`/${lang}/${basePath}/search-index.json`} ui={ui} />
+  </div>
+</Layout>
+
+<script>
+  const article = document.querySelector<HTMLElement>(".docs-prose");
+  const liveStatus = document.getElementById("docs-live-status");
+
+  if (article) {
+    const copyLabel = article.dataset.copyLabel || "Copy";
+    const copiedLabel = article.dataset.copiedLabel || "Copied";
+
+    article
+      .querySelectorAll<HTMLButtonElement>("[data-copy-code]")
+      .forEach((button) => {
+        button.textContent = copyLabel;
+        button.addEventListener("click", async () => {
+          const wrapper = button.closest("[data-code-block]");
+          const codeEl = wrapper?.querySelector("pre code");
+          const text = codeEl?.textContent || "";
+          if (!text) return;
+
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+
+          button.textContent = copiedLabel;
+          button.dataset.copied = "true";
+          if (liveStatus) {
+            liveStatus.textContent = copiedLabel;
+          }
+
+          window.setTimeout(() => {
+            button.textContent = copyLabel;
+            delete button.dataset.copied;
+          }, 1800);
+        });
+      });
+  }
+</script>

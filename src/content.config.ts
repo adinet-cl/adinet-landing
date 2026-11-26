@@ -22,6 +22,29 @@ const autorixDocs = defineCollection({
   }),
 });
 
+const indigoDocs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/indigodb-docs" }),
+  schema: z.object({
+    title: z.string(),
+    navTitle: z.string().optional(),
+    description: z.string(),
+    section: z.enum([
+      "overview",
+      "schema",
+      "orm",
+      "migrations",
+      "realtime",
+      "studio",
+      "packages",
+    ]),
+    order: z.number(),
+    badge: z.string().optional(),
+    npmPackages: z.array(z.string()).optional(),
+    runtime: z.string().optional(),
+  }),
+});
+
 export const collections = {
   autorixDocs,
+  indigoDocs,
 };

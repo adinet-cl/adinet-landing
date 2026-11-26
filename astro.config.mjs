@@ -22,6 +22,9 @@ export default defineConfig({
     shikiConfig: {
       theme: "github-dark-default",
       wrap: false,
+      langAlias: {
+        indigo: "prisma",
+      },
     },
     rehypePlugins: [rehypeDocsEnhancements],
   },

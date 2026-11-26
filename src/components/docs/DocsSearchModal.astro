@@ -1,6 +1,6 @@
 ---
 interface Props {
-  lang: string;
+  indexUrl: string;
   ui: {
     searchTitle: string;
     searchPlaceholder: string;
@@ -12,15 +12,14 @@ interface Props {
   };
 }
 
-const { lang, ui } = Astro.props;
-const indexUrl = `/${lang}/autorix/search-index.json`;
+const { indexUrl, ui } = Astro.props;
 ---
 
 <dialog
-  id="autorix-search-dialog"
+  id="docs-search-dialog"
   class="docs-search-dialog bg-white dark:bg-[#131720] text-gray-900 dark:text-white border border-gray-200 dark:border-[#262d3d] shadow-2xl"
   closedby="any"
-  aria-labelledby="autorix-search-title"
+  aria-labelledby="docs-search-title"
   data-index-url={indexUrl}
   data-empty-text={ui.searchEmpty}
   data-hint-text={ui.searchHint}
@@ -28,7 +27,7 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
   data-plural={ui.resultsPlural}
 >
   <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-[#262d3d]">
-    <h1 id="autorix-search-title" class="visually-hidden">
+    <h1 id="docs-search-title" class="visually-hidden">
       {ui.searchTitle}
     </h1>
     <svg
@@ -42,11 +41,11 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.3-4.3" />
     </svg>
-    <label for="autorix-search-input" class="visually-hidden">
+    <label for="docs-search-input" class="visually-hidden">
       {ui.searchTitle}
     </label>
     <input
-      id="autorix-search-input"
+      id="docs-search-input"
       type="search"
       autocomplete="off"
       autofocus
@@ -55,7 +54,7 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
     />
     <button
       type="button"
-      id="autorix-search-close"
+      id="docs-search-close"
       aria-label={ui.closeLabel}
       class="shrink-0 min-h-[32px] min-w-[32px] px-2 rounded-md border border-gray-200 dark:border-[#2c3446] text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-[#59B0C8] transition-colors cursor-pointer"
     >
@@ -64,7 +63,7 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
   </div>
 
   <div
-    id="autorix-search-status"
+    id="docs-search-status"
     class="visually-hidden"
     aria-live="polite"
     aria-atomic="true"
@@ -72,7 +71,7 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
   </div>
 
   <div
-    id="autorix-search-results"
+    id="docs-search-results"
     class="overflow-y-auto p-3 space-y-1.5 flex-1 min-h-[12rem]"
   >
     <p class="text-sm text-gray-500 dark:text-gray-400 px-3 py-6 text-center">
@@ -92,14 +91,14 @@ const indexUrl = `/${lang}/autorix/search-index.json`;
   }
 
   const dialog = document.getElementById(
-    "autorix-search-dialog"
+    "docs-search-dialog"
   ) as HTMLDialogElement | null;
   const input = document.getElementById(
-    "autorix-search-input"
+    "docs-search-input"
   ) as HTMLInputElement | null;
-  const closeBtn = document.getElementById("autorix-search-close");
-  const resultsEl = document.getElementById("autorix-search-results");
-  const statusEl = document.getElementById("autorix-search-status");
+  const closeBtn = document.getElementById("docs-search-close");
+  const resultsEl = document.getElementById("docs-search-results");
+  const statusEl = document.getElementById("docs-search-status");
   const openTriggers = document.querySelectorAll<HTMLButtonElement>(
     "[data-open-docs-search]"
   );

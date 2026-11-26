@@ -63,6 +63,10 @@ function normalizeLanguage(rawLang) {
     sql: "sql",
     hcl: "hcl",
     proto: "protobuf",
+    indigo: "indigo",
+    rust: "rust",
+    rs: "rust",
+    toml: "toml",
     text: "text",
     plaintext: "text",
   };

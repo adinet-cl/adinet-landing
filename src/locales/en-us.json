@@ -12,9 +12,8 @@
           {
             "key": "indigodb",
             "title": "IndigoDB",
-            "description": "Realtime ORM for Node.js powered by PostgreSQL and MongoDB.",
-            "icon": "database",
-            "href": "https://github.com/adinet-cl/indigodb"
+            "description": "Schema-first PostgreSQL toolkit: .indigo ORM, shadow migrations, WAL realtime & Studio.",
+            "icon": "database"
           },
           {
             "key": "autorix",
@@ -64,11 +63,11 @@
           {
             "key": "indigodb",
             "title": "IndigoDB",
-            "description": "Realtime ORM for Node.js. Powered by PostgreSQL triggers and MongoDB change streams.",
+            "description": "Schema-first PostgreSQL database toolkit built on a Rust/WASM .indigo language and 11 @indigodb/* npm packages.",
             "features": [
-              "Realtime DB Sync",
-              "PostgreSQL & MongoDB",
-              "Prisma-like experience"
+              "Typed ORM, RLS & Shadow Migrations",
+              "WAL Realtime SSE, Channels & React Hooks",
+              "Visual ER Diagram, Data & SQL Studio"
             ],
             "icon": "database"
           },
@@ -112,10 +111,101 @@
     },
     "indigodb": {
       "title": "IndigoDB",
-      "tagline": "Realtime ORM for Node.js",
-      "description": "IndigoDB is a realtime ORM for Node.js powered by PostgreSQL triggers and MongoDB change streams. It combines a Prisma-like developer experience with built-in realtime data synchronization.",
-      "metaDescription": "IndigoDB — realtime ORM for Node.js powered by PostgreSQL and MongoDB.",
-      "cta": "View on GitHub"
+      "tagline": "Schema-First PostgreSQL Toolkit, ORM & Studio",
+      "description": "One .indigo schema language drives a typed TypeScript ORM client, shadow-replayed PostgreSQL migrations, WAL logical-replication realtime + React hooks, and a visual ER/Data/SQL/Docs Studio across 11 @indigodb/* npm packages.",
+      "metaDescription": "IndigoDB documentation — schema-first PostgreSQL ORM, versioned migrations, WAL realtime SSE/channels, React hooks, and Studio published under @indigodb on npm.",
+      "cta": "View on GitHub",
+      "docsUi": {
+        "skipToContent": "Skip to documentation content",
+        "sidebarLabel": "IndigoDB documentation",
+        "breadcrumbLabel": "Breadcrumb",
+        "paginationLabel": "Documentation pagination",
+        "onThisPage": "On this page",
+        "menuButton": "Docs menu",
+        "searchButton": "Search docs...",
+        "searchTitle": "Search IndigoDB documentation",
+        "searchPlaceholder": "Search .indigo syntax, @indigodb/* packages, CLI, realtime...",
+        "searchEmpty": "No matching documentation pages found.",
+        "searchHint": "Type keywords like @indigodb/client, migrate, realtime, @@allow, or studio.",
+        "resultsSingular": "result",
+        "resultsPlural": "results",
+        "closeLabel": "Close",
+        "previousPage": "Previous",
+        "nextPage": "Next",
+        "copyCode": "Copy",
+        "copiedCode": "Copied",
+        "quickStartCta": "Quickstart (5 min)",
+        "architectureCta": "Master Architecture",
+        "viewGithub": "View on GitHub",
+        "viewNpm": "npm (@indigodb)",
+        "reportIssue": "Report an issue",
+        "packagesGridLabel": "IndigoDB core packages and modules"
+      },
+      "packageCards": [
+        {
+          "name": "@indigodb/cli",
+          "tag": "CLI Binary",
+          "summary": "Unified indigodb CLI for init, db push/pull, migrate dev/deploy, generate, realtime, and studio.",
+          "meta": "v0.1.1 · npx indigodb",
+          "slug": "cli/reference"
+        },
+        {
+          "name": "@indigodb/client",
+          "tag": "ORM + ./realtime",
+          "summary": "Type-safe Prisma-style PostgreSQL delegates, transactions, $auth RLS, adapters & browser-safe SSE SDK.",
+          "meta": "v0.1.1 · Server & Browser",
+          "slug": "orm/queries-and-mutations"
+        },
+        {
+          "name": "@indigodb/migrator",
+          "tag": "Migrations",
+          "summary": "Idempotent db push, PGlite shadow-replayed diffs, SHA-256 ledger, and PostgreSQL db pull introspection.",
+          "meta": "v0.1.1 · PostgreSQL DDL",
+          "slug": "migrations/overview"
+        },
+        {
+          "name": "@indigodb/realtime",
+          "tag": "WAL pgoutput",
+          "summary": "Logical-replication SSE wakes, HMAC-signed /log replay, Presence/Broadcast channels, and metrics.",
+          "meta": "v0.1.1 · ./protocol",
+          "slug": "realtime/engine-and-wal"
+        },
+        {
+          "name": "@indigodb/react",
+          "tag": "React 18+ Hooks",
+          "summary": "Browser-safe useLiveTable and useChannel hooks built on useSyncExternalStore and SSR-safe snapshots.",
+          "meta": "v0.1.1 · Browser-safe",
+          "slug": "realtime/browser-and-react"
+        },
+        {
+          "name": "@indigodb/studio",
+          "tag": "Visual SPA",
+          "summary": "React Flow ER diagram + Monaco .indigo editor, cursor Data Browser, guarded SQL Console & Schema Docs.",
+          "meta": "v0.1.1 · :5555",
+          "slug": "studio/workspace-and-security"
+        },
+        {
+          "name": "@indigodb/core",
+          "tag": "IR & Printer",
+          "summary": "Central ResolvedSchema IR, validate(), resolve(), attribute helpers, and lossless printSchema().",
+          "meta": "v0.1.1 · Node & Browser",
+          "slug": "packages/compiler-and-core"
+        },
+        {
+          "name": "@indigodb/compiler",
+          "tag": "Rust → WASM",
+          "summary": "WebAssembly .indigo lexer, parser, validator & UTF-16 spans paired with @indigodb/parser and ast.",
+          "meta": "v0.1.1 · Node & Browser",
+          "slug": "packages/compiler-and-core"
+        },
+        {
+          "name": "@indigodb/generator",
+          "tag": "Codegen",
+          "summary": "Emits typed indigo.ts row/input/where/unique types and delegates from ResolvedSchema.",
+          "meta": "v0.1.1 · indigo.ts",
+          "slug": "packages/codegen-and-migrator"
+        }
+      ]
     },
     "autorix": {
       "title": "Autorix",
@@ -245,7 +335,7 @@
     },
     "sections": {
       "product": [
-        { "label": "IndigoDB", "href": "https://github.com/adinet-cl/indigodb" },
+        { "label": "IndigoDB", "key": "indigodb" },
         { "label": "Autorix", "key": "autorix" },
         { "label": "SaaS Core", "comingSoon": true },
         { "label": "Open Source Toolkit", "comingSoon": true }
